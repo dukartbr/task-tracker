@@ -4,7 +4,7 @@ import { AddIcon } from "@chakra-ui/icons";
 
 export default function Header({ onOpen }: { onOpen: () => void }) {
   return (
-    <Flex width='100%' bgColor='blue.200' py={3} px={6}>
+    <Flex width='100%' bgColor='blue.400' py={3} px={6}>
       <Text color='white' fontWeight='bold'>
         React DnD Fun
       </Text>

@@ -8,47 +8,95 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-export default function CardGrid() {
-  const localStorageQuery = useQuery({
-    queryKey: ["todos"],
-    queryFn: () => window.localStorage.getItem("TO_DO_APP_CARDS"),
-  });
-
-  const cards: TaskCards[] = localStorageQuery.data
-    ? JSON.parse(localStorageQuery.data)
-    : [];
-
+export default function CardGrid({ cards }: { cards: TaskCards[] }) {
+  // using useCallback is optional
+  const onBeforeCapture = React.useCallback(() => {
+    console.log("onBeforeCapture :>> ", onBeforeCapture);
+  }, []);
+  const onBeforeDragStart = React.useCallback(() => {
+    console.log("onBeforeDragStart", onBeforeDragStart);
+  }, []);
+  const onDragStart = React.useCallback(() => {
+    console.log("onDragStart", onDragStart);
+  }, []);
+  const onDragUpdate = React.useCallback(() => {
+    console.log("onDragUpdate :>> ", onDragUpdate);
+  }, []);
+  const onDragEnd = React.useCallback(() => {
+    console.log("onDragEnd", onDragEnd);
+  }, []);
   return (
-    <Flex width='100%'>
-      {cards.map(({ title, color, data }) => (
-        <Stack
-          h='100vh'
-          width='100%'
-          py={3}
-          px={4}
-          bg={color}
-          key={title}
-          overflow='scroll'
-        >
-          <Heading textAlign='center' size='lg'>
-            {title}
-          </Heading>
-          <Box>
-            {data.map((card) => (
-              <Card key={card.title} my={6}>
-                <CardBody>
-                  <Heading size='md' mb={4}>
-                    {card.title}
+    <DragDropContext
+      onBeforeCapture={onBeforeCapture}
+      onBeforeDragStart={onBeforeDragStart}
+      onDragStart={onDragStart}
+      onDragUpdate={onDragUpdate}
+      onDragEnd={onDragEnd}
+    >
+      <Flex width='100%'>
+        {cards
+          .sort((a: TaskCards, b: TaskCards) => {
+            if (a.order_key < b.order_key) {
+              return -1;
+            }
+            return 1;
+          })
+          .map(({ title, color, cards }) => (
+            <Droppable key={title} droppableId={title}>
+              {(provided, snapshot) => (
+                <Stack
+                  h='100vh'
+                  width='100%'
+                  py={3}
+                  px={4}
+                  bg={color}
+                  ref={provided.innerRef}
+                  overflow='scroll'
+                  style={{
+                    backgroundColor: snapshot.isDraggingOver
+                      ? "blue.200"
+                      : color,
+                  }}
+                  {...provided.droppableProps}
+                >
+                  <Heading textAlign='center' size='lg'>
+                    {title}
                   </Heading>
-                  <Text>{card.description}</Text>
-                </CardBody>
-              </Card>
-            ))}
-          </Box>
-        </Stack>
-      ))}
-    </Flex>
+                  <Box>
+                    {cards?.map((card, index) => {
+                      return (
+                        <Draggable
+                          key={card.id}
+                          draggableId={card.title}
+                          index={index}
+                        >
+                          {(provided, snapshot) => (
+                            <Card
+                              key={card.title}
+                              my={6}
+                              bg='white'
+                              ref={provided.innerRef}
+                            >
+                              <CardBody>
+                                <Heading size='md' mb={4}>
+                                  {card.title}
+                                </Heading>
+                                <Text>{card.due_date}</Text>
+                                <Text>{card.description}</Text>
+                              </CardBody>
+                            </Card>
+                          )}
+                        </Draggable>
+                      );
+                    })}
+                  </Box>
+                </Stack>
+              )}
+            </Droppable>
+          ))}
+      </Flex>
+    </DragDropContext>
   );
 }

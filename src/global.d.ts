@@ -1,6 +1,7 @@
-type CardStatus = "IDEAS" | "TO-DO" | "IN PROGRESS" | "DONE";
+type CardStatus = "IDEAS" | "TO-DO" | "IN-PROGRESS" | "DONE";
 
 interface TaskCard {
+  id: string;
   title: string;
   description: string;
   due_date: string;
@@ -9,5 +10,7 @@ interface TaskCard {
 interface TaskCards {
   title: CardStatus;
   color: string;
-  data: TaskCard[];
+  id: CardStatus;
+  order_key: number;
+  cards: TaskCard[];
 }
