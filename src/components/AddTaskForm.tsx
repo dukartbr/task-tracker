@@ -30,6 +30,10 @@ function CustomDatePicker({
   );
 }
 
+interface NewTask extends TaskCard {
+  status?: CardStatus;
+}
+
 export default function AddTaskForm({
   cards,
   onClose,
@@ -42,15 +46,21 @@ export default function AddTaskForm({
   return (
     <Formik
       initialValues={{
+        // @ts-expect-error
         title: "",
+        // @ts-expect-error
         status: undefined,
+        // @ts-expect-error
         due_date: "",
+        // @ts-expect-error
         description: "",
+        // @ts-expect-error
+        order_key: null,
+        // @ts-expect-error
         id: "",
       }}
-      onSubmit={(newTask) => {
+      onSubmit={(newTask: NewTask) => {
         newTask.id = uuidv4();
-        console.log(uuidv4());
         if (
           !newTask.status ||
           !cards.map((card) => card.title).includes(newTask.status)
@@ -71,6 +81,7 @@ export default function AddTaskForm({
         delete newTask["status"];
         newTask["due_date"] = startDate.toString();
         const currentCards = currentCategory.cards;
+        newTask["order_key"] = currentCards.length;
         currentCategory.cards = [...currentCards, newTask];
 
         window.localStorage.setItem(
