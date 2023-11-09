@@ -1,3 +1,3 @@
 ## Task Tracker
 
-### Simple React app using Vite & Chakra
+Simple React app using Vite & Chakra
