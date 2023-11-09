@@ -7,5 +7,6 @@ Simple React app using Vite & Chakra
 **To Do**
 
 - [] add local storage
-- [] add CRUD operations for Tasks to local storage
+- [] add CRUD operations for Tasks to local storage - [tanstack query](https://tanstack.com/query/latest)
 - [] add [dnd-kit](https://github.com/clauderic/dnd-kit/tree/master)
+- [] add [react-datepicker](https://github.com/Hacker0x01/react-datepicker) for selecting due date
