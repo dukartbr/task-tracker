@@ -1,4 +1,5 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
+import { Task } from "./Task";
 
 export function TaskColumn({ task }: { task: TaskColumn }) {
 	return (
@@ -21,11 +22,7 @@ export function TaskColumn({ task }: { task: TaskColumn }) {
 				px={4}
 			>
 				{task.tasks.map((task) => {
-					return (
-						<Box key={task.title}>
-							<Text>{task.title}</Text>
-						</Box>
-					);
+					return <Task task={task} />;
 				})}
 			</Flex>
 		</Flex>

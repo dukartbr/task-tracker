@@ -1,27 +1,28 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import { TaskColumn } from "../components/TaskColumn";
+import { DndContext } from "@dnd-kit/core";
 
 export const taskGroups: TaskColumn[] = [
 	{
-		title: "backlog",
+		title: "Backlog",
 		tasks: [
 			{
-				title: "Task 1",
+				title: "Plan next week's project",
 				createdDate: "2023-11-08",
 				dueDate: "2023-11-15",
 			},
 			{
-				title: "Task 2",
+				title: "Research market trends",
 				createdDate: "2023-11-09",
 				dueDate: "2023-11-16",
 			},
 		],
 	},
 	{
-		title: "in progress",
+		title: "In Progress",
 		tasks: [
 			{
-				title: "Task 3",
+				title: "Develop new feature",
 				createdDate: "2023-11-10",
 				dueDate: "2023-11-17",
 			},
@@ -31,7 +32,7 @@ export const taskGroups: TaskColumn[] = [
 		title: "Tech Review",
 		tasks: [
 			{
-				title: "Task 4",
+				title: "Review code quality",
 				createdDate: "2023-11-11",
 				dueDate: "2023-11-18",
 			},
@@ -41,7 +42,7 @@ export const taskGroups: TaskColumn[] = [
 		title: "Done",
 		tasks: [
 			{
-				title: "Task 5",
+				title: "Release version 2.0",
 				createdDate: "2023-11-12",
 				dueDate: "2023-11-19",
 			},
@@ -52,13 +53,15 @@ export const taskGroups: TaskColumn[] = [
 export function Tasks({ tasks }: { tasks: TaskColumn[] }) {
 	return (
 		<Box w="100%" paddingY={4} px={8}>
-			<Grid templateColumns={`repeat(${tasks.length}, 1fr)`} gap={6}>
-				{tasks.map((task) => (
-					<GridItem minHeight="calc(100vh - 70px)">
-						<TaskColumn task={task} />
-					</GridItem>
-				))}
-			</Grid>
+			<DndContext>
+				<Grid templateColumns={`repeat(${tasks.length}, 1fr)`} gap={6}>
+					{tasks.map((task) => (
+						<GridItem minHeight="calc(100vh - 70px)">
+							<TaskColumn task={task} />
+						</GridItem>
+					))}
+				</Grid>
+			</DndContext>
 		</Box>
 	);
 }
