@@ -28,6 +28,10 @@ export function Header() {
 					textTransform="uppercase"
 					onClick={onOpen}
 					rightIcon={<FaPlus />}
+					_hover={{
+						backgroundColor: "orange.500",
+					}}
+					transition="background-color 0.5s"
 				>
 					<Text mr={3}>Create Task</Text>
 				</Button>

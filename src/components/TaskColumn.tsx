@@ -16,7 +16,7 @@ export function TaskColumn({ task }: { task: TaskColumn }) {
 			</Text>
 			<Flex direction="column" bg="orange.100" borderRadius={12} py={8} px={4}>
 				{task.tasks.map((task) => {
-					return <Task key={task.title} task={task} />;
+					return <Task key={task.id} task={task} />;
 				})}
 			</Flex>
 		</Flex>

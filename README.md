@@ -9,7 +9,7 @@ Simple React app using Vite & Chakra
 **To Do - Features**
 
 - [x] add [formik](https://formik.org/)
-- [] add local storage - [react-use](https://github.com/streamich/react-use/blob/master/docs/useLocalStorage.md)
+- [x] add local storage - [react-use](https://github.com/streamich/react-use/blob/master/docs/useLocalStorage.md)
 - [] add CRUD operations for Tasks to local storage - [tanstack query](https://tanstack.com/query/latest)
 - [] add [react-datepicker](https://github.com/Hacker0x01/react-datepicker) for selecting due date
 - [] add [dnd-kit](https://github.com/clauderic/dnd-kit/tree/master)

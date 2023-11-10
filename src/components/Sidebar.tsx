@@ -22,7 +22,7 @@ export function Sidebar() {
 			<Box pt={4}>
 				{!isOpen ? (
 					<Box textAlign="center">
-						<Icon as={FaReact} color="white" fontSize="3xl" />
+						<Icon as={FaReact} color="white" align="center" fontSize="3xl" />
 					</Box>
 				) : (
 					<Text>Sidebar</Text>
