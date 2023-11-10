@@ -10,19 +10,13 @@ export function TaskColumn({ task }: { task: TaskColumn }) {
 				textAlign="center"
 				fontWeight="bold"
 				color="white"
+				noOfLines={1}
 			>
 				{task.title}
 			</Text>
-			<Flex
-				direction="column"
-				bg="orange.100"
-				minH="calc(100vh - 70px)"
-				borderRadius={12}
-				py={8}
-				px={4}
-			>
+			<Flex direction="column" bg="orange.100" borderRadius={12} py={8} px={4}>
 				{task.tasks.map((task) => {
-					return <Task task={task} />;
+					return <Task key={task.title} task={task} />;
 				})}
 			</Flex>
 		</Flex>

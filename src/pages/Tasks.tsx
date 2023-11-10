@@ -1,6 +1,7 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
-import { TaskColumn } from "../components/TaskColumn";
 import { DndContext } from "@dnd-kit/core";
+import { TaskColumn } from "../components/TaskColumn";
+import { Header } from "../components/Header";
 
 export const taskGroups: TaskColumn[] = [
 	{
@@ -53,10 +54,11 @@ export const taskGroups: TaskColumn[] = [
 export function Tasks({ tasks }: { tasks: TaskColumn[] }) {
 	return (
 		<Box w="100%" paddingY={4} px={8}>
+			<Header />
 			<DndContext>
 				<Grid templateColumns={`repeat(${tasks.length}, 1fr)`} gap={6}>
 					{tasks.map((task) => (
-						<GridItem minHeight="calc(100vh - 70px)">
+						<GridItem key={task.title}>
 							<TaskColumn task={task} />
 						</GridItem>
 					))}
