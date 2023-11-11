@@ -1,8 +1,8 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import { DndContext } from "@dnd-kit/core";
-import { useLocalStorage } from "react-use";
 import { TaskColumn } from "../components/TaskColumn";
 import { Header } from "../components/Header";
+import { useTasks } from "../data";
 
 export const taskGroups: TaskColumn[] = [
 	{
@@ -28,19 +28,17 @@ export const taskGroups: TaskColumn[] = [
 ];
 
 export function Tasks() {
-	const [tasks] = useLocalStorage<TaskColumn[]>("task-tracker", taskGroups);
+	const { tasks } = useTasks();
+
+	console.log("tasks", tasks);
+
 	return (
 		<Box w="100%" paddingY={4} px={8}>
 			<Header />
 			<DndContext>
 				<Grid templateColumns={`repeat(${tasks?.length}, 1fr)`} gap={6}>
 					{tasks
-						?.sort((a, b) => {
-							if (a.status > b.status) {
-								return 1;
-							}
-							return -1;
-						})
+						?.sort((a, b) => (a.status > b.status ? 1 : -1))
 						.map((task) => (
 							<GridItem key={task.title}>
 								<TaskColumn task={task} />

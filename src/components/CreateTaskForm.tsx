@@ -10,12 +10,12 @@ import {
 } from "@chakra-ui/react";
 import { Formik, Field, Form } from "formik";
 import { FaPlus } from "react-icons/fa6";
-import { useLocalStorage } from "react-use";
 import { v4 as uuidV4 } from "uuid";
+import { useTasks } from "../data";
 
 interface TaskValues {
 	title: string;
-	priority: number;
+	priority: string;
 	status: string;
 	dueDate: string;
 }
@@ -52,42 +52,23 @@ function StatusSelect(props: any) {
 }
 
 export function CreateTaskForm() {
-	const [tasks, setTasks] = useLocalStorage<TaskColumn[]>("task-tracker");
+	const { createTask } = useTasks();
 	return (
 		<Box>
 			<Formik
 				initialValues={{
 					title: "",
-					priority: 0,
+					priority: "",
 					status: "",
 					dueDate: "",
 				}}
-				onSubmit={(values: TaskValues) => {
-					const taskColumnToAdd = tasks?.filter(
-						(task) => task.status === values.status
-					)[0];
-
-					if (!taskColumnToAdd) {
-						alert("error!");
-						return;
-					}
-
-					const newTasks = [
-						{
-							id: uuidV4(),
-							...values,
-						},
-						...taskColumnToAdd.tasks,
-					];
-
-					setTasks([
-						{
-							...taskColumnToAdd,
-							tasks: newTasks,
-						},
-						...tasks?.filter((task) => task.status !== values.status),
-					]);
-				}}
+				onSubmit={(values: TaskValues) =>
+					createTask({
+						id: uuidV4(),
+						createdDate: new Date().toLocaleString(),
+						...values,
+					} as Task)
+				}
 			>
 				<Form>
 					<ModalBody>
