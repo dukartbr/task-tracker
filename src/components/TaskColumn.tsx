@@ -14,10 +14,19 @@ export function TaskColumn({ task }: { task: TaskColumn }) {
 			>
 				{task.title}
 			</Text>
-			<Flex direction="column" bg="orange.100" borderRadius={12} py={8} px={4}>
-				{task?.tasks?.map((task) => {
-					return <Task key={task.id} task={task} />;
-				})}
+			<Flex
+				direction="column"
+				bg="orange.100"
+				borderRadius={12}
+				py={8}
+				px={4}
+				minH="calc(100vh - 200px)"
+			>
+				{task?.tasks
+					?.sort((a, b) => (a.priority > b.priority ? 1 : -1))
+					.map((task) => {
+						return <Task key={task.id} task={task} />;
+					})}
 			</Flex>
 		</Flex>
 	);

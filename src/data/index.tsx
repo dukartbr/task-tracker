@@ -24,14 +24,18 @@ const taskTemplate: TaskColumn[] = [
 ];
 
 // Local Storage CRUD Query Functions
+async function fetchTaskColumns() {
+	const storedTasks = localStorage?.getItem("task-tracker");
+	const tasks = storedTasks ? JSON.parse(storedTasks) : taskTemplate;
+	return tasks;
+}
+
 async function createTask(newTask: Task) {
-	console.log("newTask", newTask);
 	const taskColumns: TaskColumn[] = await fetchTaskColumns();
 	const taskColumnToUpdate = taskColumns.find(
 		(column) => column.status === newTask.status
 	);
 
-	console.log("taskColumnToUpdate", taskColumnToUpdate);
 	if (!taskColumnToUpdate) {
 		alert("error!");
 		return;
@@ -52,51 +56,89 @@ async function createTask(newTask: Task) {
 	return updatedTasks;
 }
 
-async function fetchTaskColumns() {
-	const storedTasks = localStorage?.getItem("task-tracker");
-	const tasks = storedTasks ? JSON.parse(storedTasks) : taskTemplate;
-	return tasks;
-}
-
 async function updateTask(taskToUpdate: Task) {
-	const tasks = await fetchTaskColumns();
-	const updatedTasks = tasks.map((task: Task) =>
-		task.id === taskToUpdate.id ? taskToUpdate : task
+	const taskColumns: TaskColumn[] = await fetchTaskColumns();
+	const taskColumnToUpdate = taskColumns.find(
+		(column) => column.status === taskToUpdate.status
 	);
-	localStorage.setItem("task-tracker", JSON.stringify(updatedTasks));
-	return updatedTasks;
+
+	if (!taskColumnToUpdate) {
+		alert("error!");
+		return;
+	}
+
+	const oldTaskColumns = taskColumns
+		.filter((col) => col.status !== taskToUpdate.status)
+		.map((column: TaskColumn) => ({
+			...column,
+			tasks: column.tasks.filter((task) => task.id !== taskToUpdate.id),
+		}));
+
+	const oldColumnTasks = taskColumnToUpdate.tasks.filter(
+		(task) => task.id !== taskToUpdate.id
+	);
+	const updatedColumn = {
+		...taskColumnToUpdate,
+		tasks: [...oldColumnTasks, taskToUpdate],
+	};
+
+	const newColumns = [...oldTaskColumns, updatedColumn];
+	localStorage.setItem("task-tracker", JSON.stringify(newColumns));
+	return newColumns;
 }
 
 async function deleteTask(taskId: string) {
-	const tasks = await fetchTaskColumns();
-	const updatedTasks = tasks.filter((task: Task) => task.id !== taskId);
-	localStorage.setItem("task-tracker", JSON.stringify(updatedTasks));
+	const taskColumns: TaskColumn[] = await fetchTaskColumns();
+
+	const columnToUpdate = taskColumns.find((col) =>
+		col.tasks.map((t) => t.id).includes(taskId)
+	);
+	const oldTaskColumns = taskColumns.filter(
+		(col) => col.status !== columnToUpdate?.status
+	);
+
+	const updatedColumn = {
+		...columnToUpdate,
+		tasks: columnToUpdate?.tasks.filter((task) => task.id !== taskId),
+	};
+
+	const newTaskColumns = [...oldTaskColumns, updatedColumn];
+
+	localStorage.setItem("task-tracker", JSON.stringify(newTaskColumns));
+	return newTaskColumns;
 }
 
-export function useTasks() {
+export function useTasks(callback?: () => void) {
 	const { data, error, isLoading, refetch } = useQuery({
 		queryKey: ["task-tracker"],
 		queryFn: fetchTaskColumns,
 		initialData: taskTemplate,
 	});
 
+	function successHandler() {
+		if (callback) {
+			callback();
+		}
+		refetch();
+	}
+
 	const createTaskMutation = useMutation({
 		mutationFn: createTask,
-		onSuccess: () => refetch(),
+		onSuccess: successHandler,
 	});
 
 	const updateTaskMutation = useMutation({
 		mutationFn: updateTask,
-		onSuccess: () => refetch(),
+		onSuccess: successHandler,
 	});
 
 	const deleteTaskMutation = useMutation({
 		mutationFn: deleteTask,
-		onSuccess: () => refetch(),
+		onSuccess: successHandler,
 	});
 
 	return {
-		tasks: data as TaskColumn[],
+		taskColumns: data as TaskColumn[],
 		error,
 		isLoading,
 		createTask: (newTask: Task) => createTaskMutation.mutate(newTask),

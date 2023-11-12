@@ -1,22 +1,9 @@
-import {
-	Button,
-	Flex,
-	Modal,
-	ModalOverlay,
-	ModalContent,
-	ModalHeader,
-	ModalBody,
-	ModalCloseButton,
-	Spacer,
-	Text,
-	useDisclosure,
-} from "@chakra-ui/react";
+import { Button, Flex, Spacer, Text, useDisclosure } from "@chakra-ui/react";
 import { FaPlus } from "react-icons/fa6";
-
-import { CreateTaskForm } from "./CreateTaskForm";
+import { TaskForm } from "./TaskForm";
 
 export function Header() {
-	const { isOpen, onClose, onOpen } = useDisclosure();
+	const { isOpen, onOpen, onClose } = useDisclosure();
 	return (
 		<>
 			<Flex w="100%" py={8}>
@@ -36,18 +23,7 @@ export function Header() {
 					<Text mr={3}>Create Task</Text>
 				</Button>
 			</Flex>
-			<Modal isOpen={isOpen} onClose={onClose}>
-				<ModalOverlay />
-				<ModalContent bgColor="gray.600">
-					<ModalHeader color="white" textTransform="uppercase">
-						Create Task
-					</ModalHeader>
-					<ModalCloseButton color="white" />
-					<ModalBody>
-						<CreateTaskForm />
-					</ModalBody>
-				</ModalContent>
-			</Modal>
+			<TaskForm isOpen={isOpen} onClose={onClose} />
 		</>
 	);
 }

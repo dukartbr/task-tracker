@@ -14,6 +14,7 @@ Simple React app using Vite & Chakra
 - [] add [react-datepicker](https://github.com/Hacker0x01/react-datepicker) for selecting due date
 - [] add [dnd-kit](https://github.com/clauderic/dnd-kit/tree/master)
 
-**To Do - Refactors**
+**To Do - Minor Improvements && Refactors**
 
+- [] add toasts
 - [] improve how height of TaskColumns is determined, get height of header component and determine window width and make calculation

@@ -1,4 +1,5 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Spacer, Text } from "@chakra-ui/react";
+import { TaskOptions } from "./TaskOptions";
 
 export function Task({ task }: { task: Task }) {
 	return (
@@ -11,26 +12,40 @@ export function Task({ task }: { task: Task }) {
 			boxShadow="lg"
 		>
 			<Flex>
-				{/* Add Priority Icon */}
-				<Box
-					w="20px"
-					h="20px"
-					// @ts-ignore
-					bgColor={`${priorityColor(parseInt(task.priority))}.400`}
-					borderRadius={4}
-					pl="3px"
-					pt="3px"
-				>
-					<Box bgColor="white" h="13px" w="13px" borderRadius={18}></Box>
-				</Box>
-				<Text fontSize="lg" fontWeight="bold" ml={3}>
-					{task.title}
-				</Text>
+				<Flex width="100%" alignItems="center">
+					<PriorityBox priority={task.priority} />
+					<Text fontSize="lg" fontWeight="bold" ml={3} noOfLines={1}>
+						{task.title}
+					</Text>
+					<Spacer />
+					<TaskOptions task={task} />
+				</Flex>
 			</Flex>
 			<Text color="white">{task.dueDate}</Text>
 			<Text color="white" opacity={0.5}>
-				{task.createdDate}
+				{task.createdDate && !task.editedDate
+					? `Created at: ${task.createdDate}`
+					: `Edited at ${task.editedDate}`}
 			</Text>
+		</Box>
+	);
+}
+
+function PriorityBox({ priority }: { priority: string }) {
+	return (
+		<Box
+			minW="20px"
+			maxW="20px"
+			w="20px"
+			minH="20px"
+			maxH="20px"
+			h="20px"
+			bgColor={`${priorityColor(parseInt(priority))}.400`}
+			borderRadius={4}
+			pl="3px"
+			pt="3px"
+		>
+			<Box bgColor="white" h="13px" w="13px" borderRadius={18}></Box>
 		</Box>
 	);
 }
