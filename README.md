@@ -10,11 +10,10 @@ Simple React app using Vite & Chakra
 
 - [x] add [formik](https://formik.org/)
 - [x] add local storage - [react-use](https://github.com/streamich/react-use/blob/master/docs/useLocalStorage.md)
-- [] add CRUD operations for Tasks to local storage - [tanstack query](https://tanstack.com/query/latest)
+- [x] add CRUD operations for Tasks to local storage - [tanstack query](https://tanstack.com/query/latest)
 - [] add [react-datepicker](https://github.com/Hacker0x01/react-datepicker) for selecting due date
 - [] add [dnd-kit](https://github.com/clauderic/dnd-kit/tree/master)
 
 **To Do - Minor Improvements && Refactors**
 
 - [] add toasts
-- [] improve how height of TaskColumns is determined, get height of header component and determine window width and make calculation
