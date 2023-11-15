@@ -6,7 +6,7 @@ import { Header } from "../components/Header";
 import { useTasks } from "../data";
 
 export function Tasks() {
-	const [isDragging, setIsDragging] = useState(false);
+	const [_isDragging, setIsDragging] = useState(false);
 	const { taskColumns, updateTask } = useTasks();
 
 	return (

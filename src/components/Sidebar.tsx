@@ -50,6 +50,8 @@ function TextContent() {
 				<a href="https://github.com/dukartbr/task-tracker" target="_blank">
 					repo
 				</a>
+				. Currently, it only supports desktop but that will change in the near
+				future.
 			</Text>
 		</Box>
 	);
