@@ -1,0 +1,56 @@
+import {
+	Box,
+	Flex,
+	IconButton,
+	Popover,
+	PopoverTrigger,
+	PopoverContent,
+	PopoverCloseButton,
+	Text,
+} from "@chakra-ui/react";
+import { TextContent } from "./Sidebar";
+import { FaBars } from "react-icons/fa6";
+
+export function MobileHeader() {
+	return (
+		<Flex
+			w="100%"
+			bg="cyan.500"
+			maxH="60px"
+			alignItems="center"
+			px={4}
+			boxShadow="xl"
+		>
+			<Popover placement="right-end">
+				<PopoverTrigger>
+					<IconButton
+						icon={<FaBars />}
+						aria-label="menu"
+						variant="solid"
+						backgroundColor="cyan.500"
+						colorScheme="cyan.500"
+						fontSize="2xl"
+					/>
+				</PopoverTrigger>
+				<PopoverContent p={5} mt={5} bg="cyan.500" boxShadow="2xl">
+					<PopoverCloseButton />
+					<Box bg="cyan.500">
+						<TextContent />
+					</Box>
+				</PopoverContent>
+			</Popover>
+			<Text
+				color="white"
+				textAlign="center"
+				width="100%"
+				fontSize="xl"
+				fontWeight="bold"
+				textTransform="uppercase"
+				noOfLines={1}
+				py={4}
+			>
+				React Task Tracker
+			</Text>
+		</Flex>
+	);
+}

@@ -40,10 +40,13 @@ export function Sidebar() {
 	);
 }
 
-function TextContent() {
+export function TextContent() {
 	return (
 		<Box px={4}>
 			<Heading>React Task Tracker</Heading>
+			<Text size="2xl" fontWeight="bold">
+				New Features & UI being added soon!
+			</Text>
 			<Text mt={3}>
 				Thanks for checking this project out. This is a simple task manager app
 				that's continuously in progress.

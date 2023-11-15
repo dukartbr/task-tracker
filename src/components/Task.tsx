@@ -11,16 +11,15 @@ export function Task({ task }: { task: Task }) {
 			my={4}
 			boxShadow="lg"
 		>
-			<Flex>
-				<Flex width="100%" alignItems="center">
-					<PriorityBox priority={task.priority} />
-					<Text fontSize="lg" fontWeight="bold" ml={3} noOfLines={1}>
-						{task.title}
-					</Text>
-					<Spacer />
-					<TaskOptions task={task} />
-				</Flex>
+			<Flex width="100%" alignItems="center">
+				<PriorityBox priority={task.priority} />
+				<Text fontSize="lg" fontWeight="bold" ml={3} noOfLines={1}>
+					{task.title}
+				</Text>
+				<Spacer />
+				<TaskOptions task={task} />
 			</Flex>
+
 			<Box>
 				<Text color="white">{task.dueDate}</Text>
 				<Text color="white" opacity={0.5}>

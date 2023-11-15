@@ -1,13 +1,12 @@
-import { Button, Flex, Spacer, Text, useDisclosure } from "@chakra-ui/react";
+import { Button, Flex, Text, useDisclosure } from "@chakra-ui/react";
 import { FaPlus } from "react-icons/fa6";
 import { TaskForm } from "./TaskForm";
 
-export function Header() {
+export function TaskHeader() {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	return (
 		<>
-			<Flex w="100%" py={8}>
-				<Spacer />
+			<Flex w="100%" py={8} justifyContent={["center", null, "right"]}>
 				<Button
 					bgColor="orange.400"
 					color="white"

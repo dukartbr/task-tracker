@@ -2,7 +2,7 @@
 
 ---
 
-Simple React app using Vite & Chakra
+Simple React Task Tracker App using Vite, Chakra, and many other cool tools.
 
 [Figma Designs](https://www.figma.com/file/oxen1fyXzt5rAciomHfg5K/Custom-Dashboard?type=design&node-id=0%3A1&mode=design&t=ikNPDA17SQajEloH-1)
 
