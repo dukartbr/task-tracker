@@ -4,6 +4,7 @@ import {
 	Flex,
 	Heading,
 	Icon,
+	Link,
 	Spacer,
 	Text,
 	useDisclosure,
@@ -41,18 +42,29 @@ export function Sidebar() {
 
 function TextContent() {
 	return (
-		<Box px={2}>
+		<Box px={4}>
 			<Heading>Howdy!</Heading>
-			<Text>
+			<Text mt={3}>
 				Thanks for checking this project out. This is a simple task manager app
-				that's continuously in progress. You can check out the progress or give
-				feedback in the{" "}
-				<a href="https://github.com/dukartbr/task-tracker" target="_blank">
-					repo
-				</a>
-				. Currently, it only supports desktop but that will change in the near
-				future.
+				that's continuously in progress.
 			</Text>
+
+			<Text mt={3}>
+				Currently, it only supports desktop but that will change in the near
+				future. Feel free to follow the design and code progress!
+			</Text>
+			<Flex mt={3}>
+				<Link
+					href="https://www.figma.com/file/oxen1fyXzt5rAciomHfg5K/Custom-Dashboard?type=design&node-id=0%3A1&mode=design&t=mrumnsgmp73wu7kL-1"
+					target="_blank"
+				>
+					<Button colorScheme="orange">Figma</Button>
+				</Link>
+				<Spacer />
+				<Link href="https://github.com/dukartbr/task-tracker" target="_blank">
+					<Button colorScheme="green">Github</Button>
+				</Link>
+			</Flex>
 		</Box>
 	);
 }

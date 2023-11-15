@@ -14,6 +14,12 @@ Simple React app using Vite & Chakra
 - [] add [react-datepicker](https://github.com/Hacker0x01/react-datepicker) for selecting due date
 - [] add [dnd-kit](https://github.com/clauderic/dnd-kit/tree/master)
 
+**To Do - UI**
+
+- [] add mobile UI
+- [] add ability to add comments
+- [] add due date
+
 **To Do - Minor Improvements && Refactors**
 
 - [] add toasts
