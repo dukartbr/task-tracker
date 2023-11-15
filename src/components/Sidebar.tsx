@@ -43,7 +43,7 @@ export function Sidebar() {
 function TextContent() {
 	return (
 		<Box px={4}>
-			<Heading>Howdy!</Heading>
+			<Heading>React Task Tracker</Heading>
 			<Text mt={3}>
 				Thanks for checking this project out. This is a simple task manager app
 				that's continuously in progress.

@@ -23,3 +23,4 @@ Simple React app using Vite & Chakra
 **To Do - Minor Improvements && Refactors**
 
 - [] add toasts
+- [] add `overdue` status
