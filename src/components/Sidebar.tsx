@@ -53,8 +53,8 @@ export function TextContent() {
 			</Text>
 
 			<Text mt={3}>
-				Currently, it only supports desktop but that will change in the near
-				future. Feel free to follow the design and code progress!
+				Currently, there is no drag and drop feature but that will change soon!
+				Feel free to follow the design and code progress!
 			</Text>
 			<Flex mt={3}>
 				<Link

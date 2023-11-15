@@ -66,7 +66,7 @@ export function TaskColumn({
 								/>
 							</Flex>
 						)}
-						<Box overflow="scroll">
+						<Box overflow={isMobile ? "scroll" : undefined}>
 							{task?.tasks
 								?.sort((a, b) => (a.priority > b.priority ? 1 : -1))
 								.map((task) => {
