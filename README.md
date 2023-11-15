@@ -4,6 +4,8 @@
 
 Simple React Task Tracker App using Vite, Chakra, and many other cool tools.
 
+[Live Demo](https://reacttasktracker.com)
+
 [Figma Designs](https://www.figma.com/file/oxen1fyXzt5rAciomHfg5K/Custom-Dashboard?type=design&node-id=0%3A1&mode=design&t=ikNPDA17SQajEloH-1)
 
 **To Do - Features**
@@ -16,7 +18,7 @@ Simple React Task Tracker App using Vite, Chakra, and many other cool tools.
 
 **To Do - UI**
 
-- [] add mobile UI
+- [x] add mobile UI
 - [] add ability to add comments
 - [] add due date
 
