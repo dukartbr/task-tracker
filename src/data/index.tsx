@@ -37,7 +37,7 @@ async function createTask(newTask: Task) {
 	);
 
 	if (!taskColumnToUpdate) {
-		alert("error!");
+		alert("please fill out all boxes");
 		return;
 	}
 
@@ -63,7 +63,7 @@ async function updateTask(taskToUpdate: Task) {
 	);
 
 	if (!taskColumnToUpdate) {
-		alert("error!");
+		alert("please fill out all boxes");
 		return;
 	}
 
