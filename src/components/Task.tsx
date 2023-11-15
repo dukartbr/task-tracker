@@ -21,12 +21,14 @@ export function Task({ task }: { task: Task }) {
 					<TaskOptions task={task} />
 				</Flex>
 			</Flex>
-			<Text color="white">{task.dueDate}</Text>
-			<Text color="white" opacity={0.5}>
-				{task.createdDate && !task.editedDate
-					? `Created at: ${task.createdDate}`
-					: `Edited at ${task.editedDate}`}
-			</Text>
+			<Box>
+				<Text color="white">{task.dueDate}</Text>
+				<Text color="white" opacity={0.5}>
+					{task.createdDate && !task.editedDate
+						? `Created at: ${task.createdDate}`
+						: `Edited at ${task.editedDate}`}
+				</Text>
+			</Box>
 		</Box>
 	);
 }

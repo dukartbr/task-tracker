@@ -90,6 +90,7 @@ export function TaskForm({
 								if (task) {
 									updateTask({
 										id: task.id,
+										createdDate: task.createdDate,
 										editedDate: new Date().toLocaleString(),
 										...values,
 									});

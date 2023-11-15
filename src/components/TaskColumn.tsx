@@ -1,7 +1,15 @@
 import { Flex, Text } from "@chakra-ui/react";
+import { useDroppable } from "@dnd-kit/core";
 import { Task } from "./Task";
 
 export function TaskColumn({ task }: { task: TaskColumn }) {
+	const { setNodeRef } = useDroppable({
+		id: task.status,
+		data: {
+			type: task.status,
+		},
+	});
+
 	return (
 		<Flex direction="column">
 			<Text
@@ -21,6 +29,7 @@ export function TaskColumn({ task }: { task: TaskColumn }) {
 				py={8}
 				px={4}
 				minH="calc(100vh - 200px)"
+				ref={setNodeRef}
 			>
 				{task?.tasks
 					?.sort((a, b) => (a.priority > b.priority ? 1 : -1))

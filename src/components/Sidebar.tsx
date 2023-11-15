@@ -2,6 +2,7 @@ import {
 	Box,
 	Button,
 	Flex,
+	Heading,
 	Icon,
 	Spacer,
 	Text,
@@ -15,7 +16,7 @@ export function Sidebar() {
 		<Flex
 			bg="cyan.500"
 			h="100vh"
-			w={isOpen ? "300px" : "110px"}
+			w={isOpen ? "300px" : "115px"}
 			transition="width 0.25s"
 			direction="column"
 		>
@@ -25,13 +26,31 @@ export function Sidebar() {
 						<Icon as={FaReact} color="white" align="center" fontSize="3xl" />
 					</Box>
 				) : (
-					<Text>Sidebar</Text>
+					<TextContent />
 				)}
 			</Box>
 			<Spacer />
 			<Box textAlign="right" pb={2} pr={4}>
-				<Button onClick={() => onToggle()}>Toggle</Button>
+				<Button variant="ghost" onClick={() => onToggle()}>
+					Toggle Info
+				</Button>
 			</Box>
 		</Flex>
+	);
+}
+
+function TextContent() {
+	return (
+		<Box px={2}>
+			<Heading>Howdy!</Heading>
+			<Text>
+				Thanks for checking this project out. This is a simple task manager app
+				that's continuously in progress. You can check out the progress or give
+				feedback in the{" "}
+				<a href="https://github.com/dukartbr/task-tracker" target="_blank">
+					repo
+				</a>
+			</Text>
+		</Box>
 	);
 }
