@@ -10,7 +10,7 @@ export function Tasks({ isMobile }: { isMobile: boolean }) {
 	const { taskColumns, updateTask } = useTasks();
 
 	return (
-		<Box w="100%" paddingY={4} px={[5, null, 8]}>
+		<Box w="100%" maxW="1400px" paddingY={4} px={[5, null, 8]}>
 			{!isMobile && <TaskHeader />}
 			<DndContext
 				collisionDetection={rectIntersection}
@@ -31,6 +31,7 @@ export function Tasks({ isMobile }: { isMobile: boolean }) {
 					gap={[3, null, 6]}
 					overflow={isMobile ? "scroll" : "inherit"}
 					maxH={isMobile ? "calc(100vh - 200px)" : undefined}
+					my="auto"
 				>
 					{taskColumns
 						?.sort((a, b) => (a.status > b.status ? 1 : -1))

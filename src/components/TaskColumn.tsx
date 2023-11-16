@@ -48,6 +48,7 @@ export function TaskColumn({
 				py={8}
 				px={4}
 				minH={!isMobile ? "calc(100vh - 200px)" : undefined}
+				maxW="300px"
 				ref={setNodeRef}
 			>
 				{!isMobile || (isMobile && isOpen) ? (
