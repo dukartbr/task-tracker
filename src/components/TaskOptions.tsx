@@ -34,20 +34,21 @@ export function TaskOptions({ task }: { task: Task }) {
 
 	return (
 		<>
-			<Box>
+			<Box position="absolute" top={2} right={0}>
 				<Menu>
 					<MenuButton
 						as={IconButton}
 						aria-label="options"
 						icon={<FaEllipsis />}
-						variant="ghost"
+						variant="unstyled"
 					/>
 					<MenuList>
-						<MenuItem onClick={onEditOpen}>Edit Task</MenuItem>
+						<MenuItem onClick={onEditOpen}>View/Edit Task</MenuItem>
 						<MenuItem onClick={onDeleteOpen}>Delete Task</MenuItem>
 					</MenuList>
 				</Menu>
 			</Box>
+			{/* Chakra has a component for this we can use */}
 			<DeleteConfirmation
 				taskId={task.id}
 				isOpen={isDeleteOpen}

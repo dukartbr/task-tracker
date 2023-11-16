@@ -14,16 +14,25 @@ import {
 	Select,
 	Spinner,
 	Text,
+	Textarea,
 } from "@chakra-ui/react";
+import * as Yup from "yup";
 import { Formik, Field, Form } from "formik";
 import { FaPlus } from "react-icons/fa6";
 import { v4 as uuidV4 } from "uuid";
 import { useTasks } from "../data";
 
+const TaskFormSchema = Yup.object().shape({
+	title: Yup.string().required("Required"),
+	priority: Yup.string().required("Required"),
+	status: Yup.string().required("Required"),
+});
+
 interface TaskValues {
 	title: string;
 	priority: string;
 	status: string;
+	details: string;
 	dueDate: string;
 }
 
@@ -67,6 +76,7 @@ export function TaskForm({
 	onClose: () => void;
 	task?: Task;
 }) {
+	const hasTask = !!task;
 	const { createTask, updateTask } = useTasks(onClose);
 	return (
 		<Modal isOpen={isOpen} onClose={onClose}>
@@ -83,8 +93,10 @@ export function TaskForm({
 								title: task?.title ?? "",
 								priority: task?.priority ?? "",
 								status: task?.status ?? "",
+								details: task?.details ?? "",
 								dueDate: task?.dueDate ?? "",
 							}}
+							validationSchema={TaskFormSchema}
 							onSubmit={(values: TaskValues) => {
 								if (task) {
 									updateTask({
@@ -102,12 +114,17 @@ export function TaskForm({
 								} as Task);
 							}}
 						>
-							{({ isSubmitting }) => (
+							{({ isSubmitting, errors, touched }) => (
 								<Form>
 									<ModalBody>
 										<FormControl my={6}>
 											<FormLabel color="white">Title</FormLabel>
 											<Field id="title" name="title" as={TitleInput} />
+											{errors.title && touched.title ? (
+												<Text color="red.400" fontWeight="bold">
+													{errors.title}
+												</Text>
+											) : null}
 										</FormControl>
 										<FormControl my={6}>
 											<FormLabel color="white">Priority</FormLabel>
@@ -116,10 +133,29 @@ export function TaskForm({
 												name="priority"
 												as={PrioritySelect}
 											/>
+											{errors.priority && touched.priority ? (
+												<Text color="red.400" fontWeight="bold">
+													{errors.priority}
+												</Text>
+											) : null}
 										</FormControl>
 										<FormControl my={6}>
 											<FormLabel color="white">Status</FormLabel>
 											<Field id="status" name="status" as={StatusSelect} />
+											{errors.status && touched.status ? (
+												<Text color="red.400" fontWeight="bold">
+													{errors.status}
+												</Text>
+											) : null}
+										</FormControl>
+										<FormControl my={6}>
+											<FormLabel color="white">Details</FormLabel>
+											<Field
+												id="details"
+												name="details"
+												bgColor="white"
+												as={Textarea}
+											/>
 										</FormControl>
 									</ModalBody>
 									<ModalFooter>
@@ -129,7 +165,11 @@ export function TaskForm({
 											rightIcon={isSubmitting ? undefined : <FaPlus />}
 											w="130px"
 										>
-											{isSubmitting ? <Spinner /> : <Text>Create Task</Text>}
+											{isSubmitting ? (
+												<Spinner />
+											) : (
+												<Text>{hasTask ? "Edit" : "Create"} Task</Text>
+											)}
 										</Button>
 									</ModalFooter>
 								</Form>

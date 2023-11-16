@@ -30,6 +30,15 @@ async function fetchTaskColumns() {
 	return tasks;
 }
 
+async function getTaskById(id: string) {
+	const taskColumns: TaskColumn[] = await fetchTaskColumns();
+	const foundTask = taskColumns
+		.flatMap((taskColumn) => taskColumn.tasks)
+		.find((task) => task.id === id);
+	if (!foundTask) return {} as Task;
+	return foundTask;
+}
+
 async function createTask(newTask: Task) {
 	const taskColumns: TaskColumn[] = await fetchTaskColumns();
 	const taskColumnToUpdate = taskColumns.find(
@@ -141,6 +150,7 @@ export function useTasks(callback?: () => void) {
 		taskColumns: data as TaskColumn[],
 		error,
 		isLoading,
+		getTaskById: (id: string) => getTaskById(id),
 		createTask: (newTask: Task) => createTaskMutation.mutate(newTask),
 		updateTask: (taskToMutate: Task) => updateTaskMutation.mutate(taskToMutate),
 		deleteTask: (taskId: string) => deleteTaskMutation.mutate(taskId),

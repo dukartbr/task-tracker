@@ -13,13 +13,17 @@ import { Task } from "./Task";
 export function TaskColumn({
 	task,
 	isMobile,
+	activeTask,
+	isDragging,
 }: {
 	task: TaskColumn;
 	isMobile: boolean;
+	activeTask?: Task;
+	isDragging: boolean;
 }) {
 	const { isOpen, onToggle } = useDisclosure();
 
-	const { setNodeRef } = useDroppable({
+	const { isOver, setNodeRef } = useDroppable({
 		id: task.status,
 		data: {
 			type: task.status,
@@ -29,11 +33,18 @@ export function TaskColumn({
 	const taskAmount = task?.tasks.length;
 
 	return (
-		<Flex direction="column">
+		<Flex
+			direction="column"
+			alignItems="center"
+			width="100%"
+			h="auto"
+			overflow="hidden"
+			px={isMobile ? 6 : undefined}
+		>
 			<Text
 				fontSize="2xl"
 				textTransform="uppercase"
-				textAlign={["left", null, "center"]}
+				textAlign="center"
 				fontWeight="bold"
 				color="white"
 				noOfLines={1}
@@ -43,15 +54,28 @@ export function TaskColumn({
 			</Text>
 			<Flex
 				direction="column"
-				bg="orange.100"
+				bgColor={isOver ? "orange.200" : "orange.100"}
 				borderRadius={12}
 				py={8}
 				px={4}
-				minH={!isMobile ? "calc(100vh - 200px)" : undefined}
-				maxW="300px"
+				h={!isMobile ? "calc(100vh - 300px)" : undefined}
+				maxW={!isMobile ? "300px" : "700px"}
+				width="100%"
 				ref={setNodeRef}
+				overflowY="scroll"
+				overflowX="hidden"
+				css={{
+					WebkitOverflowScrolling: "touch", // Enable smooth scrolling on iOS devices
+					"&::-webkit-scrollbar": {
+						width: "0.5em", // Adjust the width of the scrollbar
+					},
+					"&::-webkit-scrollbar-thumb": {
+						backgroundColor: "transparent", // Set the color of the scrollbar thumb
+					},
+				}}
 			>
 				{!isMobile || (isMobile && isOpen) ? (
+					// nasty logic here, refactor
 					<Box>
 						{isMobile && (
 							<Flex width="100%" justifyContent="right">
@@ -67,9 +91,23 @@ export function TaskColumn({
 								/>
 							</Flex>
 						)}
-						<Box overflow={isMobile ? "scroll" : undefined}>
+						<Box
+							overflow={isMobile ? "scroll" : undefined}
+							css={{
+								WebkitOverflowScrolling: "touch", // Enable smooth scrolling on iOS devices
+								"&::-webkit-scrollbar": {
+									width: "0.5em", // Adjust the width of the scrollbar
+								},
+								"&::-webkit-scrollbar-thumb": {
+									backgroundColor: "transparent", // Set the color of the scrollbar thumb
+								},
+							}}
+						>
 							{task?.tasks
-								?.sort((a, b) => (a.priority > b.priority ? 1 : -1))
+								// ?.sort((a, b) => (a.priority > b.priority ? -1 : 1))
+								?.filter((task) =>
+									isDragging ? task.id !== activeTask?.id : true
+								)
 								.map((task) => {
 									return <Task key={task.id} task={task} />;
 								})}
@@ -80,17 +118,16 @@ export function TaskColumn({
 						<Text fontSize="xl" fontWeight="bold">
 							{taskAmount}&nbsp;{taskAmount === 1 ? "Task" : "Tasks"}
 						</Text>
-						{taskAmount !== 0 && (
-							<>
-								<Spacer />
-								<IconButton
-									icon={<FaAngleDown color="gray.700" />}
-									aria-label="toggle task"
-									variant="unstyled"
-									onClick={onToggle}
-								/>
-							</>
-						)}
+
+						<>
+							<Spacer />
+							<IconButton
+								icon={<FaAngleDown color="gray.700" />}
+								aria-label="toggle task"
+								variant="unstyled"
+								onClick={onToggle}
+							/>
+						</>
 					</Flex>
 				)}
 			</Flex>
