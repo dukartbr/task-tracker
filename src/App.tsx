@@ -5,7 +5,7 @@ import { Tasks } from "./pages/Tasks";
 
 function App() {
 	const breakpoint = useBreakpoint();
-	const isMobile = ["base", "sm"].includes(breakpoint);
+	const isMobile = ["base", "sm", "md"].includes(breakpoint);
 
 	return (
 		<Flex
@@ -13,7 +13,7 @@ function App() {
 			h="100vh"
 			w="100vw"
 			position="relative"
-			direction={["column", null, "row"]}
+			direction={["column", null, null, "row"]}
 		>
 			{isMobile ? <MobileHeader /> : <Sidebar />}
 			<Tasks isMobile={isMobile} />

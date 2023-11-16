@@ -29,11 +29,11 @@ export function TaskColumn({
 	const taskAmount = task?.tasks.length;
 
 	return (
-		<Flex direction="column">
+		<Flex direction="column" alignItems="center" width="100%" h="auto">
 			<Text
 				fontSize="2xl"
 				textTransform="uppercase"
-				textAlign={["left", null, "center"]}
+				textAlign="center"
 				fontWeight="bold"
 				color="white"
 				noOfLines={1}
@@ -48,10 +48,12 @@ export function TaskColumn({
 				py={8}
 				px={4}
 				minH={!isMobile ? "calc(100vh - 200px)" : undefined}
-				maxW="300px"
+				maxW={!isMobile ? "300px" : "700px"}
+				width="100%"
 				ref={setNodeRef}
 			>
 				{!isMobile || (isMobile && isOpen) ? (
+					// nasty logic here, refactor
 					<Box>
 						{isMobile && (
 							<Flex width="100%" justifyContent="right">
