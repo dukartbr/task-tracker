@@ -29,7 +29,13 @@ export function TaskColumn({
 	const taskAmount = task?.tasks.length;
 
 	return (
-		<Flex direction="column" alignItems="center" width="100%" h="auto">
+		<Flex
+			direction="column"
+			alignItems="center"
+			width="100%"
+			h="auto"
+			overflow="hidden"
+		>
 			<Text
 				fontSize="2xl"
 				textTransform="uppercase"
@@ -47,10 +53,20 @@ export function TaskColumn({
 				borderRadius={12}
 				py={8}
 				px={4}
-				minH={!isMobile ? "calc(100vh - 200px)" : undefined}
+				h={!isMobile ? "calc(100vh - 300px)" : undefined}
 				maxW={!isMobile ? "300px" : "700px"}
 				width="100%"
 				ref={setNodeRef}
+				overflowY="scroll"
+				css={{
+					WebkitOverflowScrolling: "touch", // Enable smooth scrolling on iOS devices
+					"&::-webkit-scrollbar": {
+						width: "0.5em", // Adjust the width of the scrollbar
+					},
+					"&::-webkit-scrollbar-thumb": {
+						backgroundColor: "transparent", // Set the color of the scrollbar thumb
+					},
+				}}
 			>
 				{!isMobile || (isMobile && isOpen) ? (
 					// nasty logic here, refactor
@@ -69,7 +85,18 @@ export function TaskColumn({
 								/>
 							</Flex>
 						)}
-						<Box overflow={isMobile ? "scroll" : undefined}>
+						<Box
+							overflow={isMobile ? "scroll" : undefined}
+							css={{
+								WebkitOverflowScrolling: "touch", // Enable smooth scrolling on iOS devices
+								"&::-webkit-scrollbar": {
+									width: "0.5em", // Adjust the width of the scrollbar
+								},
+								"&::-webkit-scrollbar-thumb": {
+									backgroundColor: "transparent", // Set the color of the scrollbar thumb
+								},
+							}}
+						>
 							{task?.tasks
 								?.sort((a, b) => (a.priority > b.priority ? 1 : -1))
 								.map((task) => {

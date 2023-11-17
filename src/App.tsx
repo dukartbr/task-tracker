@@ -1,11 +1,10 @@
-import { Flex, useBreakpoint } from "@chakra-ui/react";
+import { Flex, useMediaQuery } from "@chakra-ui/react";
 import { Sidebar } from "./components/Sidebar";
 import { MobileHeader } from "./components/MobileHeader";
 import { Tasks } from "./pages/Tasks";
 
 function App() {
-	const breakpoint = useBreakpoint();
-	const isMobile = ["base", "sm", "md"].includes(breakpoint);
+	const [isMobile] = useMediaQuery("(max-width: 768px)");
 
 	return (
 		<Flex

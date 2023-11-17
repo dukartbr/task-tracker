@@ -19,6 +19,13 @@ import { Formik, Field, Form } from "formik";
 import { FaPlus } from "react-icons/fa6";
 import { v4 as uuidV4 } from "uuid";
 import { useTasks } from "../data";
+import * as Yup from "yup";
+
+const TaskFormSchema = Yup.object().shape({
+	title: Yup.string().required("Required"),
+	priority: Yup.string().required("Required"),
+	status: Yup.string().required("Required"),
+});
 
 interface TaskValues {
 	title: string;
@@ -85,6 +92,7 @@ export function TaskForm({
 								status: task?.status ?? "",
 								dueDate: task?.dueDate ?? "",
 							}}
+							validationSchema={TaskFormSchema}
 							onSubmit={(values: TaskValues) => {
 								if (task) {
 									updateTask({
@@ -102,12 +110,17 @@ export function TaskForm({
 								} as Task);
 							}}
 						>
-							{({ isSubmitting }) => (
+							{({ isSubmitting, errors, touched }) => (
 								<Form>
 									<ModalBody>
 										<FormControl my={6}>
 											<FormLabel color="white">Title</FormLabel>
 											<Field id="title" name="title" as={TitleInput} />
+											{errors.title && touched.title ? (
+												<Text color="red.400" fontWeight="bold">
+													{errors.title}
+												</Text>
+											) : null}
 										</FormControl>
 										<FormControl my={6}>
 											<FormLabel color="white">Priority</FormLabel>
@@ -116,10 +129,20 @@ export function TaskForm({
 												name="priority"
 												as={PrioritySelect}
 											/>
+											{errors.priority && touched.priority ? (
+												<Text color="red.400" fontWeight="bold">
+													{errors.priority}
+												</Text>
+											) : null}
 										</FormControl>
 										<FormControl my={6}>
 											<FormLabel color="white">Status</FormLabel>
 											<Field id="status" name="status" as={StatusSelect} />
+											{errors.status && touched.status ? (
+												<Text color="red.400" fontWeight="bold">
+													{errors.status}
+												</Text>
+											) : null}
 										</FormControl>
 									</ModalBody>
 									<ModalFooter>

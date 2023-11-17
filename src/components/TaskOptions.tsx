@@ -43,7 +43,7 @@ export function TaskOptions({ task }: { task: Task }) {
 						variant="ghost"
 					/>
 					<MenuList>
-						<MenuItem onClick={onEditOpen}>Edit Task</MenuItem>
+						<MenuItem onClick={onEditOpen}>View/Edit Task</MenuItem>
 						<MenuItem onClick={onDeleteOpen}>Delete Task</MenuItem>
 					</MenuList>
 				</Menu>
