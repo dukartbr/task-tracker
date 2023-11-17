@@ -76,6 +76,7 @@ export function TaskForm({
 	onClose: () => void;
 	task?: Task;
 }) {
+	const hasTask = !!task;
 	const { createTask, updateTask } = useTasks(onClose);
 	return (
 		<Modal isOpen={isOpen} onClose={onClose}>
@@ -164,7 +165,11 @@ export function TaskForm({
 											rightIcon={isSubmitting ? undefined : <FaPlus />}
 											w="130px"
 										>
-											{isSubmitting ? <Spinner /> : <Text>Create Task</Text>}
+											{isSubmitting ? (
+												<Spinner />
+											) : (
+												<Text>{hasTask ? "Edit" : "Create"} Task</Text>
+											)}
 										</Button>
 									</ModalFooter>
 								</Form>
