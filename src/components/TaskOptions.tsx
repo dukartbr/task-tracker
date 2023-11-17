@@ -34,7 +34,7 @@ export function TaskOptions({ task }: { task: Task }) {
 
 	return (
 		<>
-			<Box>
+			<Box position="absolute" top={2} right={0}>
 				<Menu>
 					<MenuButton
 						as={IconButton}
@@ -48,6 +48,7 @@ export function TaskOptions({ task }: { task: Task }) {
 					</MenuList>
 				</Menu>
 			</Box>
+			{/* Chakra has a component for this we can use */}
 			<DeleteConfirmation
 				taskId={task.id}
 				isOpen={isDeleteOpen}

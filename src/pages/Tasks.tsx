@@ -7,7 +7,7 @@ import { useTasks } from "../data";
 
 export function Tasks({ isMobile }: { isMobile: boolean }) {
 	const [_isDragging, setIsDragging] = useState(false);
-	const { taskColumns, updateTask, isLoading } = useTasks();
+	const { getTaskById, taskColumns, updateTask, isLoading } = useTasks();
 
 	return (
 		<Flex
@@ -22,11 +22,19 @@ export function Tasks({ isMobile }: { isMobile: boolean }) {
 					<DndContext
 						collisionDetection={rectIntersection}
 						onDragStart={() => setIsDragging(true)}
-						onDragEnd={({ over, active }) => {
+						onDragEnd={async ({ over, active }) => {
+							console.log("over", over);
+							console.log("active", active);
+
+							const currentTask = await getTaskById(active.id.toString());
+							console.log("currentTask", currentTask);
+
 							const updatedTask = {
-								...active?.data?.current,
+								...currentTask,
 								status: over?.id,
 							} as Task;
+
+							// console.log("updatedTask", updateTask);
 							updateTask(updatedTask);
 						}}
 						onDragCancel={() => setIsDragging(false)}

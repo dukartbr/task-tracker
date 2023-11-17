@@ -79,8 +79,8 @@ export function TextContent() {
 			</Text>
 
 			<Text mt={3}>
-				Currently, there is no drag and drop feature but that will change soon!
-				Feel free to follow the design and code progress!
+				Currently, there is no due date selection! Feel free to follow the
+				design and code progress!
 			</Text>
 		</Box>
 	);

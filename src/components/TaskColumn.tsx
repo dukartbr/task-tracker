@@ -19,7 +19,7 @@ export function TaskColumn({
 }) {
 	const { isOpen, onToggle } = useDisclosure();
 
-	const { setNodeRef } = useDroppable({
+	const { isOver, setNodeRef } = useDroppable({
 		id: task.status,
 		data: {
 			type: task.status,
@@ -50,7 +50,7 @@ export function TaskColumn({
 			</Text>
 			<Flex
 				direction="column"
-				bg="orange.100"
+				bgColor={isOver ? "orange.200" : "orange.100"}
 				borderRadius={12}
 				py={8}
 				px={4}
@@ -101,6 +101,7 @@ export function TaskColumn({
 							{task?.tasks
 								?.sort((a, b) => (a.priority > b.priority ? -1 : 1))
 								.map((task) => {
+									// console.log("task", task);
 									return <Task key={task.id} task={task} />;
 								})}
 						</Box>

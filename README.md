@@ -14,7 +14,7 @@ Simple React Task Tracker App using Vite, Chakra, and many other cool tools.
 - [x] add local storage - [react-use](https://github.com/streamich/react-use/blob/master/docs/useLocalStorage.md)
 - [x] add CRUD operations for Tasks to local storage - [tanstack query](https://tanstack.com/query/latest)
 - [] add [react-datepicker](https://github.com/Hacker0x01/react-datepicker) for selecting due date
-- [] add [dnd-kit](https://github.com/clauderic/dnd-kit/tree/master)
+- [x] add [dnd-kit](https://github.com/clauderic/dnd-kit/tree/master)
 
 **To Do - UI**
 
@@ -22,6 +22,7 @@ Simple React Task Tracker App using Vite, Chakra, and many other cool tools.
 - [x] fix width handling for tasks with large titles
 - [x] add ability to add comments
 - [] add due date
+- [] improve D&D experience by showing the task being dragged over
 
 **To Do - Minor Improvements && Refactors**
 
