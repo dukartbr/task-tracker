@@ -40,7 +40,7 @@ export function TaskOptions({ task }: { task: Task }) {
 						as={IconButton}
 						aria-label="options"
 						icon={<FaEllipsis />}
-						variant="ghost"
+						variant="unstyled"
 					/>
 					<MenuList>
 						<MenuItem onClick={onEditOpen}>View/Edit Task</MenuItem>

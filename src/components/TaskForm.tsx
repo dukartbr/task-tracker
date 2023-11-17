@@ -14,6 +14,7 @@ import {
 	Select,
 	Spinner,
 	Text,
+	Textarea,
 } from "@chakra-ui/react";
 import { Formik, Field, Form } from "formik";
 import { FaPlus } from "react-icons/fa6";
@@ -31,6 +32,7 @@ interface TaskValues {
 	title: string;
 	priority: string;
 	status: string;
+	details: string;
 	dueDate: string;
 }
 
@@ -90,6 +92,7 @@ export function TaskForm({
 								title: task?.title ?? "",
 								priority: task?.priority ?? "",
 								status: task?.status ?? "",
+								details: task?.details ?? "",
 								dueDate: task?.dueDate ?? "",
 							}}
 							validationSchema={TaskFormSchema}
@@ -143,6 +146,15 @@ export function TaskForm({
 													{errors.status}
 												</Text>
 											) : null}
+										</FormControl>
+										<FormControl my={6}>
+											<FormLabel color="white">Details</FormLabel>
+											<Field
+												id="details"
+												name="details"
+												bgColor="white"
+												as={Textarea}
+											/>
 										</FormControl>
 									</ModalBody>
 									<ModalFooter>

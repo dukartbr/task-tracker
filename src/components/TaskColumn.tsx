@@ -110,17 +110,16 @@ export function TaskColumn({
 						<Text fontSize="xl" fontWeight="bold">
 							{taskAmount}&nbsp;{taskAmount === 1 ? "Task" : "Tasks"}
 						</Text>
-						{taskAmount !== 0 && (
-							<>
-								<Spacer />
-								<IconButton
-									icon={<FaAngleDown color="gray.700" />}
-									aria-label="toggle task"
-									variant="unstyled"
-									onClick={onToggle}
-								/>
-							</>
-						)}
+
+						<>
+							<Spacer />
+							<IconButton
+								icon={<FaAngleDown color="gray.700" />}
+								aria-label="toggle task"
+								variant="unstyled"
+								onClick={onToggle}
+							/>
+						</>
 					</Flex>
 				)}
 			</Flex>
