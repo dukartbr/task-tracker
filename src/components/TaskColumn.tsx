@@ -35,6 +35,7 @@ export function TaskColumn({
 			width="100%"
 			h="auto"
 			overflow="hidden"
+			px={isMobile ? 6 : undefined}
 		>
 			<Text
 				fontSize="2xl"
