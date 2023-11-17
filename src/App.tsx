@@ -4,7 +4,7 @@ import { MobileHeader } from "./components/MobileHeader";
 import { Tasks } from "./pages/Tasks";
 
 function App() {
-	const [isMobile] = useMediaQuery("(max-width: 992x)");
+	const [isMobile] = useMediaQuery("(max-width: 992px)");
 
 	return (
 		<Flex
