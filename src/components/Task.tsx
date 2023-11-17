@@ -1,11 +1,16 @@
 import { Box, Flex, Spacer, Text } from "@chakra-ui/react";
-import { TaskOptions } from "./TaskOptions";
 import { useDraggable } from "@dnd-kit/core";
+import dayjs from "dayjs";
+import { TaskOptions } from "./TaskOptions";
 
 export function Task({ task }: { task: Task }) {
 	const { attributes, listeners, setNodeRef, transform } = useDraggable({
 		id: task.id,
 	});
+
+	const displayDate = dayjs(
+		task.createdDate && !task.editedDate ? task.createdDate : task.editedDate
+	).format("MM/DD/YYYY h:mm A");
 	return (
 		<Box position="relative">
 			<Box
@@ -42,8 +47,8 @@ export function Task({ task }: { task: Task }) {
 					{/* <Text color="white">{task.dueDate}</Text> */}
 					<Text color="white" mt={2} noOfLines={1}>
 						{task.createdDate && !task.editedDate
-							? `Created at: ${task.createdDate}`
-							: `Edited at ${task.editedDate}`}
+							? `Created at: ${displayDate}`
+							: `Edited at ${displayDate}`}
 					</Text>
 					<Text mt={2}>{task.details?.substring(0, 120)}</Text>
 				</Box>
