@@ -103,18 +103,14 @@ export function TaskForm({
 									updateTask({
 										id: task.id,
 										createdDate: task.createdDate,
-										editedDate: dayjs(new Date().toLocaleString()).format(
-											"MM/DD/YYYY h:mm A"
-										),
+										editedDate: new Date().toLocaleString(),
 										...values,
 									});
 									return;
 								}
 								createTask({
 									id: uuidV4(),
-									createdDate: dayjs(new Date().toLocaleString()).format(
-										"MM/DD/YYYY h:mm A"
-									),
+									createdDate: new Date().toLocaleString(),
 									...values,
 								} as Task);
 							}}
