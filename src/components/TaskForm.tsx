@@ -16,11 +16,12 @@ import {
 	Text,
 	Textarea,
 } from "@chakra-ui/react";
+import * as Yup from "yup";
+import * as dayjs from "dayjs";
 import { Formik, Field, Form } from "formik";
 import { FaPlus } from "react-icons/fa6";
 import { v4 as uuidV4 } from "uuid";
 import { useTasks } from "../data";
-import * as Yup from "yup";
 
 const TaskFormSchema = Yup.object().shape({
 	title: Yup.string().required("Required"),
@@ -102,14 +103,18 @@ export function TaskForm({
 									updateTask({
 										id: task.id,
 										createdDate: task.createdDate,
-										editedDate: new Date().toLocaleString(),
+										editedDate: dayjs(new Date().toLocaleString()).format(
+											"MM/DD/YYYY h:mm A"
+										),
 										...values,
 									});
 									return;
 								}
 								createTask({
 									id: uuidV4(),
-									createdDate: new Date().toLocaleString(),
+									createdDate: dayjs(new Date().toLocaleString()).format(
+										"MM/DD/YYYY h:mm A"
+									),
 									...values,
 								} as Task);
 							}}

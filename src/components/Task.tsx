@@ -40,7 +40,7 @@ export function Task({ task }: { task: Task }) {
 
 				<Box>
 					{/* <Text color="white">{task.dueDate}</Text> */}
-					<Text color="white" mt={2}>
+					<Text color="white" mt={2} noOfLines={1}>
 						{task.createdDate && !task.editedDate
 							? `Created at: ${task.createdDate}`
 							: `Edited at ${task.editedDate}`}
