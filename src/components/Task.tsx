@@ -39,12 +39,13 @@ export function Task({ task }: { task: Task }) {
 				</Flex>
 
 				<Box>
-					<Text color="white">{task.dueDate}</Text>
-					<Text color="white" opacity={0.5}>
+					{/* <Text color="white">{task.dueDate}</Text> */}
+					<Text color="white" mt={2}>
 						{task.createdDate && !task.editedDate
 							? `Created at: ${task.createdDate}`
 							: `Edited at ${task.editedDate}`}
 					</Text>
+					<Text mt={2}>{task.details?.substring(0, 120)}</Text>
 				</Box>
 			</Box>
 			<TaskOptions task={task} />
