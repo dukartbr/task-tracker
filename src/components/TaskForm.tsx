@@ -17,7 +17,6 @@ import {
 	Textarea,
 } from "@chakra-ui/react";
 import * as Yup from "yup";
-import * as dayjs from "dayjs";
 import { Formik, Field, Form } from "formik";
 import { FaPlus } from "react-icons/fa6";
 import { v4 as uuidV4 } from "uuid";
