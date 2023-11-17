@@ -26,5 +26,5 @@ Simple React Task Tracker App using Vite, Chakra, and many other cool tools.
 **To Do - Minor Improvements && Refactors**
 
 - [] add toasts
-- [] add form validation
+- [x] add form validation
 - [] add `overdue` status
