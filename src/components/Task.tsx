@@ -26,7 +26,13 @@ export function Task({ task }: { task: Task }) {
 			>
 				<Flex width="100%" alignItems="center">
 					<PriorityBox priority={task.priority} />
-					<Text fontSize="lg" fontWeight="bold" ml={3} noOfLines={1}>
+					<Text
+						fontSize="lg"
+						fontWeight="bold"
+						ml={3}
+						noOfLines={1}
+						maxW="150px"
+					>
 						{task.title}
 					</Text>
 					<Spacer />
