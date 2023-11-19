@@ -6,7 +6,7 @@ import {
 	Text,
 	useDisclosure,
 } from "@chakra-ui/react";
-import { useDraggable, useDroppable } from "@dnd-kit/core";
+import { useDroppable } from "@dnd-kit/core";
 import { FaAngleDown } from "react-icons/fa6";
 import { Task } from "./Task";
 
@@ -105,8 +105,8 @@ export function TaskColumn({
 							}}
 						>
 							{task?.tasks
-								?.sort((a, b) => (a.priority > b.priority ? -1 : 1))
-								.filter((task) =>
+								// ?.sort((a, b) => (a.priority > b.priority ? -1 : 1))
+								?.filter((task) =>
 									isDragging ? task.id !== activeTask?.id : true
 								)
 								.map((task) => {
