@@ -75,7 +75,8 @@ export function TextContent() {
 			</Text>
 			<Text mt={3}>
 				Thanks for checking this project out. This is a simple task manager app
-				that's continuously in progress.
+				that's continuously in progress. The mobile experience is still a little
+				funky.
 			</Text>
 
 			<Text mt={3}>

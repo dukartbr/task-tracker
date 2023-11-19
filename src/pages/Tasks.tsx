@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Box, Flex, Grid, GridItem } from "@chakra-ui/react";
 import { rectIntersection, DndContext, DragOverlay } from "@dnd-kit/core";
 import { TaskColumn } from "../components/TaskColumn";
@@ -7,7 +7,8 @@ import { useTasks } from "../data";
 import { Task } from "../components/Task";
 
 export function Tasks({ isMobile }: { isMobile: boolean }) {
-	const [activeTask, setActiveTask] = useState(undefined);
+	const [activeTask, setActiveTask] = useState<Task>();
+	const [isDragging, setIsDragging] = useState<boolean>(false);
 	const { getTaskById, taskColumns, updateTask, isLoading } = useTasks();
 
 	return (
@@ -23,11 +24,13 @@ export function Tasks({ isMobile }: { isMobile: boolean }) {
 					<DndContext
 						collisionDetection={rectIntersection}
 						onDragStart={async (event) => {
+							setIsDragging(true);
 							const currentTask = await getTaskById(event.active.id.toString());
 							// @ts-ignore
 							setActiveTask(currentTask);
 						}}
 						onDragEnd={async ({ over, active }) => {
+							setIsDragging(false);
 							const currentTask = await getTaskById(active.id.toString());
 
 							const updatedTask = {
@@ -36,7 +39,10 @@ export function Tasks({ isMobile }: { isMobile: boolean }) {
 							} as Task;
 							updateTask(updatedTask);
 						}}
-						onDragCancel={() => setActiveTask(undefined)}
+						onDragCancel={() => {
+							setIsDragging(false);
+							setActiveTask(undefined);
+						}}
 					>
 						<Grid
 							templateColumns={[
@@ -65,7 +71,12 @@ export function Tasks({ isMobile }: { isMobile: boolean }) {
 								?.sort((a, b) => (a.status > b.status ? 1 : -1))
 								.map((task) => (
 									<GridItem key={task.title}>
-										<TaskColumn isMobile={isMobile} task={task} />
+										<TaskColumn
+											isMobile={isMobile}
+											task={task}
+											activeTask={activeTask}
+											isDragging={isDragging}
+										/>
 									</GridItem>
 								))}
 						</Grid>

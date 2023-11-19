@@ -6,16 +6,20 @@ import {
 	Text,
 	useDisclosure,
 } from "@chakra-ui/react";
-import { useDroppable } from "@dnd-kit/core";
+import { useDraggable, useDroppable } from "@dnd-kit/core";
 import { FaAngleDown } from "react-icons/fa6";
 import { Task } from "./Task";
 
 export function TaskColumn({
 	task,
 	isMobile,
+	activeTask,
+	isDragging,
 }: {
 	task: TaskColumn;
 	isMobile: boolean;
+	activeTask?: Task;
+	isDragging: boolean;
 }) {
 	const { isOpen, onToggle } = useDisclosure();
 
@@ -25,6 +29,8 @@ export function TaskColumn({
 			type: task.status,
 		},
 	});
+
+	console.log("isDragging", isDragging);
 
 	const taskAmount = task?.tasks.length;
 
@@ -100,8 +106,10 @@ export function TaskColumn({
 						>
 							{task?.tasks
 								?.sort((a, b) => (a.priority > b.priority ? -1 : 1))
+								.filter((task) =>
+									isDragging ? task.id !== activeTask?.id : true
+								)
 								.map((task) => {
-									// console.log("task", task);
 									return <Task key={task.id} task={task} />;
 								})}
 						</Box>
