@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box, Flex, Grid, GridItem } from "@chakra-ui/react";
 import { rectIntersection, DndContext, DragOverlay } from "@dnd-kit/core";
 import { TaskColumn } from "../components/TaskColumn";
 import { TaskHeader } from "../components/TaskHeader";
 import { useTasks } from "../data";
+import { Task } from "../components/Task";
 
 export function Tasks({ isMobile }: { isMobile: boolean }) {
-	const [_isDragging, setIsDragging] = useState(false);
+	const [activeTask, setActiveTask] = useState(undefined);
 	const { getTaskById, taskColumns, updateTask, isLoading } = useTasks();
 
 	return (
@@ -21,23 +22,21 @@ export function Tasks({ isMobile }: { isMobile: boolean }) {
 					{!isMobile && <TaskHeader />}
 					<DndContext
 						collisionDetection={rectIntersection}
-						onDragStart={() => setIsDragging(true)}
+						onDragStart={async (event) => {
+							const currentTask = await getTaskById(event.active.id.toString());
+							// @ts-ignore
+							setActiveTask(currentTask);
+						}}
 						onDragEnd={async ({ over, active }) => {
-							console.log("over", over);
-							console.log("active", active);
-
 							const currentTask = await getTaskById(active.id.toString());
-							console.log("currentTask", currentTask);
 
 							const updatedTask = {
 								...currentTask,
 								status: over?.id,
 							} as Task;
-
-							// console.log("updatedTask", updateTask);
 							updateTask(updatedTask);
 						}}
-						onDragCancel={() => setIsDragging(false)}
+						onDragCancel={() => setActiveTask(undefined)}
 					>
 						<Grid
 							templateColumns={[
@@ -70,7 +69,9 @@ export function Tasks({ isMobile }: { isMobile: boolean }) {
 									</GridItem>
 								))}
 						</Grid>
-						<DragOverlay />
+						<DragOverlay>
+							{activeTask && <Task task={activeTask} />}
+						</DragOverlay>
 					</DndContext>
 					{isMobile && (
 						<Box position="fixed" width="100%" bottom={0} bg="gray.700">

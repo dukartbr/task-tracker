@@ -19,6 +19,7 @@ Simple React Task Tracker App using Vite, Chakra, and many other cool tools.
 **To Do - UI**
 
 - [x] add mobile UI
+- [] fix mobile UX
 - [x] fix width handling for tasks with large titles
 - [x] add ability to add comments
 - [] add due date
