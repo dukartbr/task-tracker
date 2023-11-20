@@ -6,7 +6,7 @@ type Task = {
 	editedDate?: string;
 	details?: string;
 	priority: string;
-	status: string;
+	status?: string;
 };
 
 interface TaskColumn {

@@ -26,7 +26,6 @@ export function Tasks({ isMobile }: { isMobile: boolean }) {
 						onDragStart={async (event) => {
 							setIsDragging(true);
 							const currentTask = await getTaskById(event.active.id.toString());
-							// @ts-ignore
 							setActiveTask(currentTask);
 						}}
 						onDragEnd={async ({ over, active }) => {

@@ -30,3 +30,8 @@ Simple React Task Tracker App using Vite, Chakra, and many other cool tools.
 - [] add toasts
 - [x] add form validation
 - [] add `overdue` status
+
+**To Do - Bugs**
+
+- [] when dragging is done the task still flashes in the old column
+- [] when clicking a task in the column, and not dragging the form trys to submit
