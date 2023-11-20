@@ -65,6 +65,7 @@ export function TaskColumn({
 				width="100%"
 				ref={setNodeRef}
 				overflowY="scroll"
+				overflowX="hidden"
 				css={{
 					WebkitOverflowScrolling: "touch", // Enable smooth scrolling on iOS devices
 					"&::-webkit-scrollbar": {
