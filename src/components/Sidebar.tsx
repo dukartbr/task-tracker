@@ -80,9 +80,11 @@ export function TextContent() {
 			</Text>
 
 			<Text mt={3}>
-				Currently, there is no due date selection! Feel free to follow the
-				design and code progress!
+				Currently, there is no due date selection, but that will change soon!
+				Feel free to follow the design and code progress!
 			</Text>
+
+			<Text mt={3}>This is a portfolio project</Text>
 		</Box>
 	);
 }

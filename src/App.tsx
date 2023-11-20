@@ -9,10 +9,12 @@ export const MobileContext = createContext(false);
 function App() {
 	const [isMobile, setIsMobile] = useState(false);
 	const [isSmallerThan992] = useMediaQuery("(max-width: 992px)");
-
+	console.log("isSmallerThan992", isSmallerThan992);
+	console.log(MobileContext);
+	console.log("isMobile", isMobile);
 	useEffect(() => {
 		setIsMobile(isSmallerThan992);
-	}, [isSmallerThan992]);
+	}, [isSmallerThan992, setIsMobile]);
 
 	return (
 		<MobileContext.Provider value={isMobile}>

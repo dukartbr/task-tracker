@@ -30,8 +30,6 @@ export function TaskColumn({
 		},
 	});
 
-	console.log("isDragging", isDragging);
-
 	const taskAmount = task?.tasks.length;
 
 	return (
