@@ -23,7 +23,7 @@ Simple React Task Tracker App using Vite, Chakra, and many other cool tools.
 - [x] fix width handling for tasks with large titles
 - [x] add ability to add comments
 - [] add due date
-- [] improve D&D experience by showing the task being dragged over
+- [x] improve D&D experience by showing the task being dragged over
 
 **To Do - Minor Improvements && Refactors**
 

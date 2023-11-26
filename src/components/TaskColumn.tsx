@@ -104,7 +104,7 @@ export function TaskColumn({
 							}}
 						>
 							{task?.tasks
-								// ?.sort((a, b) => (a.priority > b.priority ? -1 : 1))
+								?.sort((a, b) => (a.priority > b.priority ? -1 : 1))
 								?.filter((task) =>
 									isDragging ? task.id !== activeTask?.id : true
 								)
