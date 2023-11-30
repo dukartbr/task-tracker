@@ -138,6 +138,7 @@ export function TaskForm({
 										</FormControl>
 										<FormControl my={6}>
 											<FormLabel color="white">Priority</FormLabel>
+
 											<Field
 												id="priority"
 												name="priority"

@@ -34,4 +34,4 @@ Simple React Task Tracker App using Vite, Chakra, and many other cool tools.
 **To Do - Bugs**
 
 - [] when dragging is done the task still flashes in the old column
-- [] when clicking a task in the column, and not dragging the form tries to submit
+- [x] when clicking a task in the column, and not dragging the form tries to submit
