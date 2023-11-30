@@ -176,7 +176,7 @@ export function TaskForm({
 													rightIcon={<FaRegTrashCan />}
 													onClick={onDeleteOpen}
 												>
-													Delete Icon
+													Delete Task
 												</Button>
 											)}
 											<Button
