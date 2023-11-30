@@ -15,7 +15,7 @@ export function Sidebar() {
 	const { isOpen, onToggle } = useDisclosure();
 	return (
 		<Flex
-			bg="cyan.500"
+			bg="cyan.600"
 			h="100vh"
 			w={isOpen ? "300px" : "115px"}
 			transition="width 0.25s"

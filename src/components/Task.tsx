@@ -15,7 +15,7 @@ export function Task({ task }: { task: Task }) {
 	return (
 		<Box position="relative">
 			<Box
-				bgColor="cyan.400"
+				bgColor="cyan.600"
 				borderRadius={12}
 				py={5}
 				px={4}
@@ -46,7 +46,11 @@ export function Task({ task }: { task: Task }) {
 				</Flex>
 
 				<Box>
-					{/* <Text color="white">{task.dueDate}</Text> */}
+					{task.dueDate && (
+						<Text color="white" fontWeight="bold">
+							Due: {task.dueDate}
+						</Text>
+					)}
 					<Text color="white" mt={2} noOfLines={1}>
 						{task.createdDate && !task.editedDate
 							? `Created at: ${displayDate}`

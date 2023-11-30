@@ -50,7 +50,7 @@ export function TaskColumn({
 				noOfLines={1}
 				mb={3}
 			>
-				{task.title}
+				{task.title} {taskAmount > 0 && !isMobile && `(${taskAmount})`}
 			</Text>
 			<Flex
 				direction="column"

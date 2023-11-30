@@ -136,6 +136,7 @@ export function TaskForm({
 												</Text>
 											) : null}
 										</FormControl>
+										{/* <DatePicker /> */}
 										<FormControl my={6}>
 											<FormLabel color="white">Priority</FormLabel>
 
@@ -189,7 +190,7 @@ export function TaskForm({
 												{isSubmitting ? (
 													<Spinner />
 												) : (
-													<Text>{hasTask ? "Edit" : "Create"} Task</Text>
+													<Text>{hasTask ? "Save" : "Create"} Task</Text>
 												)}
 											</Button>
 										</Flex>
