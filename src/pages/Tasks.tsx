@@ -1,6 +1,13 @@
 import { useState } from "react";
 import { Box, Flex, Grid, GridItem } from "@chakra-ui/react";
-import { rectIntersection, DndContext, DragOverlay } from "@dnd-kit/core";
+import {
+	rectIntersection,
+	DndContext,
+	DragOverlay,
+	useSensor,
+	useSensors,
+	MouseSensor,
+} from "@dnd-kit/core";
 import { TaskColumn } from "../components/TaskColumn";
 import { TaskHeader } from "../components/TaskHeader";
 import { useTasks } from "../data";
@@ -10,6 +17,15 @@ export function Tasks({ isMobile }: { isMobile: boolean }) {
 	const [activeTask, setActiveTask] = useState<Task>();
 	const [isDragging, setIsDragging] = useState<boolean>(false);
 	const { getTaskById, taskColumns, updateTask, isLoading } = useTasks();
+
+	const mouseSensor = useSensor(MouseSensor, {
+		// Require the mouse to move by 10 pixels before activating
+		activationConstraint: {
+			distance: 10,
+		},
+	});
+
+	const sensors = useSensors(mouseSensor);
 
 	return (
 		<Flex
@@ -42,6 +58,7 @@ export function Tasks({ isMobile }: { isMobile: boolean }) {
 							setIsDragging(false);
 							setActiveTask(undefined);
 						}}
+						sensors={sensors}
 					>
 						<Grid
 							templateColumns={[

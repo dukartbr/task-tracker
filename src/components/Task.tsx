@@ -1,9 +1,10 @@
-import { Box, Flex, Spacer, Text } from "@chakra-ui/react";
+import { Box, Flex, Spacer, Text, useDisclosure } from "@chakra-ui/react";
 import { useDraggable } from "@dnd-kit/core";
 import dayjs from "dayjs";
-import { TaskOptions } from "./TaskOptions";
+import { TaskForm } from "./TaskForm";
 
 export function Task({ task }: { task: Task }) {
+	const { isOpen, onOpen, onClose } = useDisclosure();
 	const { attributes, listeners, setNodeRef, transform } = useDraggable({
 		id: task.id,
 	});
@@ -28,6 +29,7 @@ export function Task({ task }: { task: Task }) {
 						? `translate3d(${transform.x}px, ${transform.y}px, 10)`
 						: undefined
 				}
+				onClick={onOpen}
 			>
 				<Flex width="100%" alignItems="center">
 					<PriorityBox priority={task.priority} />
@@ -53,7 +55,7 @@ export function Task({ task }: { task: Task }) {
 					<Text mt={2}>{task.details?.substring(0, 120)}</Text>
 				</Box>
 			</Box>
-			<TaskOptions task={task} />
+			<TaskForm isOpen={isOpen} onClose={onClose} task={task} />
 		</Box>
 	);
 }

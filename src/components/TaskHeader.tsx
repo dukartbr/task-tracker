@@ -6,7 +6,7 @@ export function TaskHeader() {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	return (
 		<>
-			<Flex w="100%" py={8} justifyContent={["center", null, null, "right"]}>
+			<Flex w="100%" py={8} justifyContent={["center", null, null, "start"]}>
 				<Button
 					bgColor="orange.400"
 					color="white"

@@ -74,8 +74,15 @@ export function TextContent() {
 				New Features & UI being added soon!
 			</Text>
 			<Text mt={3}>
-				Thanks for checking this project out. This is a simple task manager portfolio app
-				that's continuously in progress. You can follow the <Link href="https://github.com/dukartbr/task-tracker#readme" target="_blank">README</Link> for the current status of bugs and UI funkiness. 
+				Thanks for checking this project out. This is a simple task manager
+				portfolio app that's continuously in progress. You can follow the{" "}
+				<Link
+					href="https://github.com/dukartbr/task-tracker#readme"
+					target="_blank"
+				>
+					README
+				</Link>{" "}
+				for the current status of bugs and UI funkiness.
 			</Text>
 			<Text mt={3}>
 				Currently, there is no due date selection, but that will change soon!

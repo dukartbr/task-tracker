@@ -59,7 +59,7 @@ export function TaskOptions({ task }: { task: Task }) {
 	);
 }
 
-function DeleteConfirmation({
+export function DeleteConfirmation({
 	isOpen,
 	onClose,
 	taskId,

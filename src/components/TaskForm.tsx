@@ -6,6 +6,7 @@ import {
 	ModalOverlay,
 	Box,
 	Button,
+	Flex,
 	FormControl,
 	FormLabel,
 	Input,
@@ -15,12 +16,14 @@ import {
 	Spinner,
 	Text,
 	Textarea,
+	useDisclosure,
 } from "@chakra-ui/react";
 import * as Yup from "yup";
 import { Formik, Field, Form } from "formik";
-import { FaPlus } from "react-icons/fa6";
+import { FaPlus, FaRegTrashCan } from "react-icons/fa6";
 import { v4 as uuidV4 } from "uuid";
 import { useTasks } from "../data";
+import { DeleteConfirmation } from "./TaskOptions";
 
 const TaskFormSchema = Yup.object().shape({
 	title: Yup.string().required("Required"),
@@ -78,6 +81,13 @@ export function TaskForm({
 }) {
 	const hasTask = !!task;
 	const { createTask, updateTask } = useTasks(onClose);
+
+	const {
+		isOpen: isDeleteOpen,
+		onOpen: onDeleteOpen,
+		onClose: onDeleteClose,
+	} = useDisclosure();
+
 	return (
 		<Modal isOpen={isOpen} onClose={onClose}>
 			<ModalOverlay />
@@ -159,18 +169,29 @@ export function TaskForm({
 										</FormControl>
 									</ModalBody>
 									<ModalFooter>
-										<Button
-											colorScheme="orange"
-											type="submit"
-											rightIcon={isSubmitting ? undefined : <FaPlus />}
-											w="130px"
-										>
-											{isSubmitting ? (
-												<Spinner />
-											) : (
-												<Text>{hasTask ? "Edit" : "Create"} Task</Text>
+										<Flex>
+											{task && (
+												<Button
+													mr={4}
+													rightIcon={<FaRegTrashCan />}
+													onClick={onDeleteOpen}
+												>
+													Delete Icon
+												</Button>
 											)}
-										</Button>
+											<Button
+												colorScheme="orange"
+												type="submit"
+												rightIcon={isSubmitting ? undefined : <FaPlus />}
+												w="130px"
+											>
+												{isSubmitting ? (
+													<Spinner />
+												) : (
+													<Text>{hasTask ? "Edit" : "Create"} Task</Text>
+												)}
+											</Button>
+										</Flex>
 									</ModalFooter>
 								</Form>
 							)}
@@ -178,6 +199,13 @@ export function TaskForm({
 					</Box>
 				</ModalBody>
 			</ModalContent>
+			{task && (
+				<DeleteConfirmation
+					onClose={onDeleteClose}
+					isOpen={isDeleteOpen}
+					taskId={task.id}
+				/>
+			)}
 		</Modal>
 	);
 }
