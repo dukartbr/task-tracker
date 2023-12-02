@@ -14,8 +14,7 @@ import { useTasks } from "../data";
 import { Task } from "../components/Task";
 
 export function Tasks({ isMobile }: { isMobile: boolean }) {
-	const [activeTask, setActiveTask] = useState<Task>();
-	const [isDragging, setIsDragging] = useState<boolean>(false);
+	const [activeTask, setActiveTask] = useState<Task | null>(null);
 	const { getTaskById, taskColumns, updateTask, isLoading } = useTasks();
 
 	const mouseSensor = useSensor(MouseSensor, {
@@ -40,23 +39,25 @@ export function Tasks({ isMobile }: { isMobile: boolean }) {
 					<DndContext
 						collisionDetection={rectIntersection}
 						onDragStart={async (event) => {
-							setIsDragging(true);
-							const currentTask = await getTaskById(event.active.id.toString());
+							const taskId = event.active.id.toString();
+							const currentTask = await getTaskById(taskId);
 							setActiveTask(currentTask);
 						}}
 						onDragEnd={async ({ over, active }) => {
-							setIsDragging(false);
+							if (!over) {
+								setActiveTask(null);
+								return;
+							}
 							const currentTask = await getTaskById(active.id.toString());
-
 							const updatedTask = {
 								...currentTask,
 								status: over?.id,
 							} as Task;
 							updateTask(updatedTask);
+							setActiveTask(null);
 						}}
 						onDragCancel={() => {
-							setIsDragging(false);
-							setActiveTask(undefined);
+							setActiveTask(null);
 						}}
 						sensors={sensors}
 					>
@@ -76,7 +77,7 @@ export function Tasks({ isMobile }: { isMobile: boolean }) {
 							css={{
 								WebkitOverflowScrolling: "touch", // Enable smooth scrolling on iOS devices
 								"&::-webkit-scrollbar": {
-									width: "0.5em", // Adjust the width of the scrollbar
+									width: "0em", // Adjust the width of the scrollbar
 								},
 								"&::-webkit-scrollbar-thumb": {
 									backgroundColor: "transparent", // Set the color of the scrollbar thumb
@@ -91,7 +92,6 @@ export function Tasks({ isMobile }: { isMobile: boolean }) {
 											isMobile={isMobile}
 											task={task}
 											activeTask={activeTask}
-											isDragging={isDragging}
 										/>
 									</GridItem>
 								))}

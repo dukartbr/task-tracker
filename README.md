@@ -15,6 +15,7 @@ Simple React Task Tracker App using Vite, Chakra, and many other cool tools.
 - [x] add CRUD operations for Tasks to local storage - [tanstack query](https://tanstack.com/query/latest)
 - [] add [react-datepicker](https://github.com/Hacker0x01/react-datepicker) for selecting due date
 - [x] add [dnd-kit](https://github.com/clauderic/dnd-kit/tree/master)
+- [] add notes section
 
 **To Do - UI**
 

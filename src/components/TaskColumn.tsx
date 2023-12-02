@@ -14,12 +14,10 @@ export function TaskColumn({
 	task,
 	isMobile,
 	activeTask,
-	isDragging,
 }: {
 	task: TaskColumn;
 	isMobile: boolean;
-	activeTask?: Task;
-	isDragging: boolean;
+	activeTask?: Task | null;
 }) {
 	const { isOpen, onToggle } = useDisclosure();
 
@@ -56,9 +54,9 @@ export function TaskColumn({
 				direction="column"
 				bgColor={isOver ? "orange.200" : "orange.100"}
 				borderRadius={12}
-				py={8}
-				px={4}
-				h={!isMobile ? "calc(100vh - 300px)" : undefined}
+				py={2}
+				px={2}
+				h={!isMobile ? "calc(100vh - 200px)" : undefined}
 				maxW={!isMobile ? "300px" : "700px"}
 				width="100%"
 				ref={setNodeRef}
@@ -67,7 +65,7 @@ export function TaskColumn({
 				css={{
 					WebkitOverflowScrolling: "touch", // Enable smooth scrolling on iOS devices
 					"&::-webkit-scrollbar": {
-						width: "0.5em", // Adjust the width of the scrollbar
+						width: "0em", // Adjust the width of the scrollbar
 					},
 					"&::-webkit-scrollbar-thumb": {
 						backgroundColor: "transparent", // Set the color of the scrollbar thumb
@@ -96,7 +94,7 @@ export function TaskColumn({
 							css={{
 								WebkitOverflowScrolling: "touch", // Enable smooth scrolling on iOS devices
 								"&::-webkit-scrollbar": {
-									width: "0.5em", // Adjust the width of the scrollbar
+									width: "0em", // Adjust the width of the scrollbar
 								},
 								"&::-webkit-scrollbar-thumb": {
 									backgroundColor: "transparent", // Set the color of the scrollbar thumb
@@ -105,9 +103,7 @@ export function TaskColumn({
 						>
 							{task?.tasks
 								?.sort((a, b) => (a.priority > b.priority ? -1 : 1))
-								?.filter((task) =>
-									isDragging ? task.id !== activeTask?.id : true
-								)
+								?.filter((task) => task.id !== activeTask?.id)
 								.map((task) => {
 									return <Task key={task.id} task={task} />;
 								})}
