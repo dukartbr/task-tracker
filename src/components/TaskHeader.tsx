@@ -9,6 +9,7 @@ export function TaskHeader() {
 			<Flex
 				w="100%"
 				py={[2, null, null, null, 6]}
+				px={2}
 				justifyContent={["center", null, null, "start"]}
 			>
 				<Button
