@@ -23,7 +23,7 @@ import * as Yup from "yup";
 import { Formik, Field, Form } from "formik";
 import { FaPlus, FaRegTrashCan } from "react-icons/fa6";
 import { v4 as uuidV4 } from "uuid";
-import * as dayjs from "dayjs";
+import dayjs from "dayjs";
 import { useTasks } from "../data";
 import { DeleteConfirmation } from "./TaskOptions";
 import DatePicker from "react-datepicker";
