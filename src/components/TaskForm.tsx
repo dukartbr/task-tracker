@@ -151,9 +151,10 @@ export function TaskForm({
 										<FormControl my={6}>
 											<FormLabel color="white">Title*</FormLabel>
 											<Field id="title" name="title" as={TitleInput} />
-											{errors.title}
 											{errors.title && touched.title ? (
-												<Text color="red.400" fontWeight="bold"></Text>
+												<Text color="red.400" fontWeight="bold">
+													{errors.title}
+												</Text>
 											) : null}
 										</FormControl>
 										<FormControl my={6}>
