@@ -9,6 +9,8 @@ export function Task({ task }: { task: Task }) {
 		id: task.id,
 	});
 
+	const isOverdue = dayjs().isAfter(task.dueDate);
+
 	const displayDate = dayjs(
 		task.createdDate && !task.editedDate ? task.createdDate : task.editedDate
 	).format("MM/DD/YYYY h:mm A");
@@ -36,19 +38,29 @@ export function Task({ task }: { task: Task }) {
 					<Text
 						fontSize="lg"
 						fontWeight="bold"
-						ml={3}
+						mx={3}
 						noOfLines={1}
 						maxW="150px"
 					>
 						{task.title}
 					</Text>
+
 					<Spacer />
 				</Flex>
 
-				<Box>
+				<Box mt={1}>
 					{task.dueDate && (
-						<Text color="white" fontWeight="bold">
-							Due: {task.dueDate}
+						<Text
+							mr={2}
+							color="white"
+							bgColor={isOverdue ? "red.500" : "transparent"}
+							fontWeight="bold"
+							display="inline-block"
+							p={isOverdue ? 3 : "inherit"}
+							borderRadius={isOverdue ? 12 : "inherit"}
+							noOfLines={1}
+						>
+							{isOverdue ? "Overdue!" : `Due: ${task.dueDate}`}
 						</Text>
 					)}
 					<Text color="white" mt={2} noOfLines={1}>

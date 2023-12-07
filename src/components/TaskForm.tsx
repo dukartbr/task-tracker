@@ -1,3 +1,4 @@
+import { forwardRef, useState } from "react";
 import {
 	Modal,
 	ModalCloseButton,
@@ -22,8 +23,12 @@ import * as Yup from "yup";
 import { Formik, Field, Form } from "formik";
 import { FaPlus, FaRegTrashCan } from "react-icons/fa6";
 import { v4 as uuidV4 } from "uuid";
+import * as dayjs from "dayjs";
 import { useTasks } from "../data";
 import { DeleteConfirmation } from "./TaskOptions";
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 const TaskFormSchema = Yup.object().shape({
 	title: Yup.string().required("Required"),
@@ -36,7 +41,7 @@ interface TaskValues {
 	priority: string;
 	status: string;
 	details: string;
-	dueDate: string;
+	// dueDate: string;
 }
 
 function TitleInput(props: any) {
@@ -79,8 +84,24 @@ export function TaskForm({
 	onClose: () => void;
 	task?: Task;
 }) {
+	const [dueDate, setDueDate] = useState(
+		task?.dueDate ? new Date(task?.dueDate) : undefined
+	);
 	const hasTask = !!task;
 	const { createTask, updateTask } = useTasks(onClose);
+	const isOverdue = !!dayjs().isAfter(task?.dueDate);
+	const daysLeft = task?.dueDate ? dayjs(dueDate).diff(new Date(), "d") : null;
+
+	// @ts-expect-error
+	const DueDate = forwardRef(({ onClick, value, placeholder }, ref) => {
+		const hasValue = value.length > 0;
+		return (
+			// @ts-expect-error
+			<Button width="100%" onClick={onClick} ref={ref}>
+				{hasValue ? value : placeholder}
+			</Button>
+		);
+	});
 
 	const {
 		isOpen: isDeleteOpen,
@@ -104,7 +125,6 @@ export function TaskForm({
 								priority: task?.priority ?? "",
 								status: task?.status ?? "",
 								details: task?.details ?? "",
-								dueDate: task?.dueDate ?? "",
 							}}
 							validationSchema={TaskFormSchema}
 							onSubmit={(values: TaskValues) => {
@@ -112,6 +132,7 @@ export function TaskForm({
 									updateTask({
 										id: task.id,
 										createdDate: task.createdDate,
+										dueDate: dueDate ? dueDate.toLocaleDateString() : undefined,
 										editedDate: new Date().toLocaleString(),
 										...values,
 									});
@@ -128,18 +149,34 @@ export function TaskForm({
 								<Form>
 									<ModalBody>
 										<FormControl my={6}>
-											<FormLabel color="white">Title</FormLabel>
+											<FormLabel color="white">Title*</FormLabel>
 											<Field id="title" name="title" as={TitleInput} />
+											{errors.title}
 											{errors.title && touched.title ? (
-												<Text color="red.400" fontWeight="bold">
-													{errors.title}
-												</Text>
+												<Text color="red.400" fontWeight="bold"></Text>
 											) : null}
+											<FormControl my={6}></FormControl>
+											<FormLabel color="white">
+												<Flex>
+													Due Date
+													{isOverdue ? (
+														<Text color="red.400" fontWeight="bold">
+															&nbsp;-&nbsp;Overdue!
+														</Text>
+													) : daysLeft ? (
+														<>:&nbsp;{daysLeft}&nbsp;Days Left</>
+													) : null}
+												</Flex>
+											</FormLabel>
+											<DatePicker
+												selected={dueDate}
+												onChange={(date) => (date ? setDueDate(date) : null)}
+												placeholderText="No Due Date"
+												customInput={<DueDate />}
+											/>
 										</FormControl>
-										{/* <DatePicker /> */}
 										<FormControl my={6}>
-											<FormLabel color="white">Priority</FormLabel>
-
+											<FormLabel color="white">Priority*</FormLabel>
 											<Field
 												id="priority"
 												name="priority"
@@ -152,7 +189,7 @@ export function TaskForm({
 											) : null}
 										</FormControl>
 										<FormControl my={6}>
-											<FormLabel color="white">Status</FormLabel>
+											<FormLabel color="white">Status*</FormLabel>
 											<Field id="status" name="status" as={StatusSelect} />
 											{errors.status && touched.status ? (
 												<Text color="red.400" fontWeight="bold">

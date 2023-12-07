@@ -45,7 +45,6 @@ export function Tasks({ isMobile }: { isMobile: boolean }) {
 						}}
 						onDragEnd={async ({ over, active }) => {
 							if (!over) {
-								setActiveTask(null);
 								return;
 							}
 							const currentTask = await getTaskById(active.id.toString());
