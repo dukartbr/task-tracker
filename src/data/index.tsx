@@ -72,8 +72,12 @@ async function updateTask(taskToUpdate: Task) {
 	);
 
 	if (!taskColumnToUpdate) {
-		alert("please fill out all boxes");
-		return;
+		const newColumns = taskColumns.map((col) => ({
+			...col,
+			tasks: col.tasks.filter((task) => task.id !== taskToUpdate.id),
+		}));
+		localStorage.setItem("task-tracker", JSON.stringify(newColumns));
+		return newColumns;
 	}
 
 	const oldTaskColumns = taskColumns

@@ -13,7 +13,6 @@ import { Task } from "./Task";
 export function TaskColumn({
 	task,
 	isMobile,
-	activeTask,
 }: {
 	task: TaskColumn;
 	isMobile: boolean;
@@ -103,7 +102,6 @@ export function TaskColumn({
 						>
 							{task?.tasks
 								?.sort((a, b) => (a.priority > b.priority ? -1 : 1))
-								?.filter((task) => task.id !== activeTask?.id)
 								.map((task) => {
 									return <Task key={task.id} task={task} />;
 								})}

@@ -42,17 +42,20 @@ export function Tasks({ isMobile }: { isMobile: boolean }) {
 							const taskId = event.active.id.toString();
 							const currentTask = await getTaskById(taskId);
 							setActiveTask(currentTask);
+							const updatedTask = {
+								...currentTask,
+								status: "",
+							} as Task;
+							updateTask(updatedTask);
 						}}
-						onDragEnd={async ({ over, active }) => {
+						onDragEnd={async ({ over }) => {
 							if (!over) {
 								return;
 							}
-							const currentTask = await getTaskById(active.id.toString());
-							const updatedTask = {
-								...currentTask,
-								status: over?.id,
-							} as Task;
-							updateTask(updatedTask);
+
+							if (activeTask) {
+								updateTask({ ...activeTask, status: over?.id } as Task);
+							}
 							setActiveTask(null);
 						}}
 						onDragCancel={() => {

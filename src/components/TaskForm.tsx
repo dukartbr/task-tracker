@@ -33,7 +33,6 @@ import "react-datepicker/dist/react-datepicker.css";
 const TaskFormSchema = Yup.object().shape({
 	title: Yup.string().required("Required"),
 	priority: Yup.string().required("Required"),
-	status: Yup.string().required("Required"),
 });
 
 interface TaskValues {
@@ -128,6 +127,9 @@ export function TaskForm({
 							}}
 							validationSchema={TaskFormSchema}
 							onSubmit={(values: TaskValues) => {
+								if (values.status === "") {
+									values.status = "0";
+								}
 								if (task) {
 									updateTask({
 										id: task.id,
@@ -202,13 +204,8 @@ export function TaskForm({
 											) : null}
 										</FormControl>
 										<FormControl my={6}>
-											<FormLabel color="white">Status*</FormLabel>
+											<FormLabel color="white">Status</FormLabel>
 											<Field id="status" name="status" as={StatusSelect} />
-											{errors.status && touched.status ? (
-												<Text color="red.400" fontWeight="bold">
-													{errors.status}
-												</Text>
-											) : null}
 										</FormControl>
 										<FormControl my={6}>
 											<FormLabel color="white">Details</FormLabel>
