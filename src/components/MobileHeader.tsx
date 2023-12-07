@@ -1,15 +1,15 @@
 import {
 	Box,
+	Button,
 	Flex,
 	IconButton,
 	Popover,
 	PopoverTrigger,
 	PopoverContent,
-	PopoverCloseButton,
 	Text,
+	Link,
 } from "@chakra-ui/react";
-import { TextContent } from "./Sidebar";
-import { FaBars } from "react-icons/fa6";
+import { FaBars, FaFigma, FaGithub } from "react-icons/fa6";
 
 export function MobileHeader() {
 	return (
@@ -33,9 +33,35 @@ export function MobileHeader() {
 					/>
 				</PopoverTrigger>
 				<PopoverContent p={5} mt={5} bg="cyan.500" boxShadow="2xl">
-					<PopoverCloseButton />
 					<Box bg="cyan.500">
-						<TextContent />
+						<Flex direction="column" px={2}>
+							<Link
+								href="https://www.figma.com/file/oxen1fyXzt5rAciomHfg5K/Custom-Dashboard?type=design&node-id=0%3A1&mode=design&t=mrumnsgmp73wu7kL-1"
+								target="_blank"
+								my={3}
+							>
+								<Button
+									colorScheme="orange"
+									width="100%"
+									rightIcon={<FaFigma />}
+								>
+									Designs
+								</Button>
+							</Link>
+							<Link
+								href="https://github.com/dukartbr/task-tracker"
+								target="_blank"
+								my={3}
+							>
+								<Button
+									colorScheme="green"
+									width="100%"
+									rightIcon={<FaGithub />}
+								>
+									Code
+								</Button>
+							</Link>
+						</Flex>
 					</Box>
 				</PopoverContent>
 			</Popover>
