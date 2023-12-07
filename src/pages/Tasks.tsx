@@ -14,6 +14,7 @@ import { useTasks } from "../data";
 import { Task } from "../components/Task";
 
 export function Tasks({ isMobile }: { isMobile: boolean }) {
+	const [prevStatus, setPrevStatus] = useState("");
 	const [activeTask, setActiveTask] = useState<Task | null>(null);
 	const { getTaskById, taskColumns, updateTask, isLoading } = useTasks();
 
@@ -41,7 +42,10 @@ export function Tasks({ isMobile }: { isMobile: boolean }) {
 						onDragStart={async (event) => {
 							const taskId = event.active.id.toString();
 							const currentTask = await getTaskById(taskId);
+
+							setPrevStatus(currentTask.status ?? "0");
 							setActiveTask(currentTask);
+
 							const updatedTask = {
 								...currentTask,
 								status: "",
@@ -49,16 +53,20 @@ export function Tasks({ isMobile }: { isMobile: boolean }) {
 							updateTask(updatedTask);
 						}}
 						onDragEnd={async ({ over }) => {
-							if (!over) {
-								return;
+							if (activeTask && !over) {
+								updateTask({ ...activeTask, status: prevStatus } as Task);
 							}
 
-							if (activeTask) {
+							if (activeTask && over) {
 								updateTask({ ...activeTask, status: over?.id } as Task);
 							}
 							setActiveTask(null);
 						}}
 						onDragCancel={() => {
+							if (activeTask) {
+								updateTask({ ...activeTask, status: prevStatus });
+							}
+							setPrevStatus("");
 							setActiveTask(null);
 						}}
 						sensors={sensors}
