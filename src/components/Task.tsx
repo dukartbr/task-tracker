@@ -9,7 +9,7 @@ export function Task({ task }: { task: Task }) {
 		id: task.id,
 	});
 
-	const isOverdue = dayjs().isAfter(task.dueDate);
+	const isOverdue = dayjs().isAfter(dayjs(task.dueDate).add(1, "day"));
 
 	const displayDate = dayjs(
 		task.createdDate && !task.editedDate ? task.createdDate : task.editedDate

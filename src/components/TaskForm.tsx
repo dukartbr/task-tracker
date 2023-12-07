@@ -89,7 +89,7 @@ export function TaskForm({
 	);
 	const hasTask = !!task;
 	const { createTask, updateTask } = useTasks(onClose);
-	const isOverdue = !!dayjs().isAfter(task?.dueDate);
+	const isOverdue = !!dayjs().isAfter(dayjs(task?.dueDate).add(1, "day"));
 	const daysLeft = task?.dueDate ? dayjs(dueDate).diff(new Date(), "d") : null;
 
 	// @ts-expect-error
@@ -155,7 +155,8 @@ export function TaskForm({
 											{errors.title && touched.title ? (
 												<Text color="red.400" fontWeight="bold"></Text>
 											) : null}
-											<FormControl my={6}></FormControl>
+										</FormControl>
+										<FormControl my={6}>
 											<FormLabel color="white">
 												<Flex>
 													Due Date
@@ -168,12 +169,23 @@ export function TaskForm({
 													) : null}
 												</Flex>
 											</FormLabel>
-											<DatePicker
-												selected={dueDate}
-												onChange={(date) => (date ? setDueDate(date) : null)}
-												placeholderText="No Due Date"
-												customInput={<DueDate />}
-											/>
+											<Flex>
+												<DatePicker
+													selected={dueDate}
+													onChange={(date) => (date ? setDueDate(date) : null)}
+													placeholderText="No Due Date"
+													customInput={<DueDate />}
+												/>
+												{dueDate && (
+													<Button
+														ml={8}
+														bgColor="orange.200"
+														onClick={() => setDueDate(undefined)}
+													>
+														Clear Due Date
+													</Button>
+												)}
+											</Flex>
 										</FormControl>
 										<FormControl my={6}>
 											<FormLabel color="white">Priority*</FormLabel>
