@@ -143,6 +143,7 @@ export function TaskForm({
 								createTask({
 									id: uuidV4(),
 									createdDate: new Date().toLocaleString(),
+									dueDate: dueDate ? dueDate.toLocaleDateString() : undefined,
 									...values,
 								} as Task);
 							}}
