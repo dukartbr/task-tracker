@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Flex, Grid, GridItem } from "@chakra-ui/react";
 import {
 	rectIntersection,
@@ -12,11 +12,20 @@ import { TaskColumn } from "../components/TaskColumn";
 import { TaskHeader } from "../components/TaskHeader";
 import { useTasks } from "../data";
 import { Task } from "../components/Task";
+import { TaskFooter } from "../components/TaskFooter";
 
 export function Tasks({ isMobile }: { isMobile: boolean }) {
 	const [prevStatus, setPrevStatus] = useState("");
 	const [activeTask, setActiveTask] = useState<Task | null>(null);
-	const { getTaskById, taskColumns, updateTask, isLoading } = useTasks();
+	const {
+		getTaskById,
+		taskColumns: initialTaskColumns,
+
+		updateTask,
+		isLoading,
+	} = useTasks();
+
+	const [taskColumns, setTaskColumns] = useState<TaskColumn[]>([]);
 
 	const mouseSensor = useSensor(MouseSensor, {
 		// Require the mouse to move by 10 pixels before activating
@@ -27,6 +36,27 @@ export function Tasks({ isMobile }: { isMobile: boolean }) {
 
 	const sensors = useSensors(mouseSensor);
 
+	useEffect(() => {
+		setTaskColumns(initialTaskColumns);
+	}, [setTaskColumns, initialTaskColumns]);
+
+	function handleSearch(e: any) {
+		e.preventDefault();
+		const searchValue = e.target.value;
+		if (searchValue !== "") {
+			setTaskColumns(
+				taskColumns.map((column) => ({
+					...column,
+					tasks: column.tasks.filter((task) =>
+						task.title.toLowerCase().includes(searchValue.toLowerCase())
+					),
+				}))
+			);
+		} else {
+			setTaskColumns(initialTaskColumns);
+		}
+	}
+
 	return (
 		<Flex
 			w="100%"
@@ -36,7 +66,7 @@ export function Tasks({ isMobile }: { isMobile: boolean }) {
 		>
 			{!isLoading && (
 				<Box maxW={!isMobile ? "1400px" : undefined} width="100%">
-					{!isMobile && <TaskHeader />}
+					{!isMobile && <TaskHeader handleSearch={handleSearch} />}
 					<DndContext
 						collisionDetection={rectIntersection}
 						onDragStart={async (event) => {
@@ -110,11 +140,7 @@ export function Tasks({ isMobile }: { isMobile: boolean }) {
 							{activeTask && <Task task={activeTask} />}
 						</DragOverlay>
 					</DndContext>
-					{isMobile && (
-						<Box position="fixed" width="100%" bottom={0} bg="gray.700">
-							<TaskHeader />
-						</Box>
-					)}
+					{isMobile && <TaskFooter />}
 				</Box>
 			)}
 		</Flex>

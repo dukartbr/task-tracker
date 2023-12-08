@@ -1,14 +1,27 @@
-import { Button, Flex, Text, useDisclosure } from "@chakra-ui/react";
-import { FaPlus } from "react-icons/fa6";
+import {
+	Button,
+	Flex,
+	Text,
+	Spacer,
+	Input,
+	useDisclosure,
+	InputGroup,
+	InputLeftElement,
+} from "@chakra-ui/react";
+import { FaMagnifyingGlass, FaPlus } from "react-icons/fa6";
 import { TaskForm } from "./TaskForm";
 
-export function TaskHeader() {
+export function TaskHeader({
+	handleSearch,
+}: {
+	handleSearch: (args: any) => any;
+}) {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	return (
 		<>
 			<Flex
 				w="100%"
-				py={[2, null, null, null, 6]}
+				py={6}
 				px={4}
 				justifyContent={["center", null, null, "start"]}
 			>
@@ -26,6 +39,17 @@ export function TaskHeader() {
 				>
 					<Text mr={3}>Create Task</Text>
 				</Button>
+				<Spacer />
+				<InputGroup maxW="320px">
+					<InputLeftElement pointerEvents="none">
+						<FaMagnifyingGlass />
+					</InputLeftElement>
+					<Input
+						placeholder="Search for a Task"
+						bgColor="white"
+						onChange={handleSearch}
+					/>
+				</InputGroup>
 			</Flex>
 			<TaskForm isOpen={isOpen} onClose={onClose} />
 		</>

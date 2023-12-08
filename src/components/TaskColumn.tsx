@@ -109,10 +109,9 @@ export function TaskColumn({
 					</Box>
 				) : (
 					<Flex>
-						<Text fontSize="xl" fontWeight="bold">
+						<Text fontSize="xl" fontWeight="bold" pl={3} py={2}>
 							{taskAmount}&nbsp;{taskAmount === 1 ? "Task" : "Tasks"}
 						</Text>
-
 						<>
 							<Spacer />
 							<IconButton
