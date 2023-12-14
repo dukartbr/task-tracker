@@ -16,7 +16,6 @@ export function TaskColumn({
 }: {
 	task: TaskColumn;
 	isMobile: boolean;
-	activeTask?: Task | null;
 }) {
 	const { isOpen, onToggle } = useDisclosure();
 

@@ -40,7 +40,7 @@ export function Tasks({ isMobile }: { isMobile: boolean }) {
 		setTaskColumns(initialTaskColumns);
 	}, [setTaskColumns, initialTaskColumns]);
 
-	function handleSearch(e: any) {
+	function handleSearch(e) {
 		e.preventDefault();
 		const searchValue = e.target.value;
 		if (searchValue !== "") {
@@ -90,6 +90,7 @@ export function Tasks({ isMobile }: { isMobile: boolean }) {
 							if (activeTask && over) {
 								updateTask({ ...activeTask, status: over?.id } as Task);
 							}
+							setPrevStatus("");
 							setActiveTask(null);
 						}}
 						onDragCancel={() => {
@@ -128,11 +129,7 @@ export function Tasks({ isMobile }: { isMobile: boolean }) {
 								?.sort((a, b) => (a.status > b.status ? 1 : -1))
 								.map((task) => (
 									<GridItem key={task.title}>
-										<TaskColumn
-											isMobile={isMobile}
-											task={task}
-											activeTask={activeTask}
-										/>
+										<TaskColumn isMobile={isMobile} task={task} />
 									</GridItem>
 								))}
 						</Grid>

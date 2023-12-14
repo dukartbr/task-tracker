@@ -40,7 +40,6 @@ interface TaskValues {
 	priority: string;
 	status: string;
 	details: string;
-	// dueDate: string;
 }
 
 function TitleInput(props: any) {
@@ -91,11 +90,11 @@ export function TaskForm({
 	const isOverdue = !!dayjs().isAfter(dayjs(task?.dueDate).add(1, "day"));
 	const daysLeft = task?.dueDate ? dayjs(dueDate).diff(new Date(), "d") : null;
 
-	// @ts-expect-error
+	// @ts-expect-error - undefined values
 	const DueDate = forwardRef(({ onClick, value, placeholder }, ref) => {
 		const hasValue = value.length > 0;
 		return (
-			// @ts-expect-error
+			// @ts-expect-error - ref
 			<Button width="100%" onClick={onClick} ref={ref}>
 				{hasValue ? value : placeholder}
 			</Button>
