@@ -5,7 +5,7 @@ type Task = {
 	dueDate?: string;
 	editedDate?: string;
 	details?: string;
-	priority?: string;
+	priority: string;
 	status?: string;
 };
 
