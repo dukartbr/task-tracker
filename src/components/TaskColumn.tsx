@@ -99,9 +99,11 @@ export function TaskColumn({
 								},
 							}}
 						>
-							{task?.tasks.map((task) => {
-								return <Task key={task.id} task={task} />;
-							})}
+							{task?.tasks
+								?.sort((a, b) => (a.priority > b.priority ? -1 : 1))
+								.map((task) => {
+									return <Task key={task.id} task={task} />;
+								})}
 						</Box>
 					</Box>
 				) : (
