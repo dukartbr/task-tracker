@@ -32,7 +32,6 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const TaskFormSchema = Yup.object().shape({
 	title: Yup.string().required("Required"),
-	priority: Yup.string().required("Required"),
 });
 
 interface TaskValues {
@@ -42,7 +41,7 @@ interface TaskValues {
 	details: string;
 }
 
-function TitleInput(props: any) {
+function TitleInput(props) {
 	return (
 		<Input
 			placeholder="Enter a Description..."
@@ -52,7 +51,7 @@ function TitleInput(props: any) {
 	);
 }
 
-function PrioritySelect(props: any) {
+function PrioritySelect(props) {
 	return (
 		<Select placeholder="Select" backgroundColor="white" {...props}>
 			<option value={0}>Low</option>
@@ -62,7 +61,7 @@ function PrioritySelect(props: any) {
 	);
 }
 
-function StatusSelect(props: any) {
+function StatusSelect(props) {
 	return (
 		<Select placeholder="Select" backgroundColor="white" {...props}>
 			<option value={0}>Backlog</option>
@@ -129,6 +128,9 @@ export function TaskForm({
 								if (values.status === "") {
 									values.status = "0";
 								}
+								if (values.priority === "") {
+									values.priority = "0";
+								}
 								if (task) {
 									updateTask({
 										id: task.id,
@@ -191,17 +193,12 @@ export function TaskForm({
 											</Flex>
 										</FormControl>
 										<FormControl my={6}>
-											<FormLabel color="white">Priority*</FormLabel>
+											<FormLabel color="white">Priority</FormLabel>
 											<Field
 												id="priority"
 												name="priority"
 												as={PrioritySelect}
 											/>
-											{errors.priority && touched.priority ? (
-												<Text color="red.400" fontWeight="bold">
-													{errors.priority}
-												</Text>
-											) : null}
 										</FormControl>
 										<FormControl my={6}>
 											<FormLabel color="white">Status</FormLabel>

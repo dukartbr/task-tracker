@@ -11,11 +11,7 @@ import {
 import { FaMagnifyingGlass, FaPlus } from "react-icons/fa6";
 import { TaskForm } from "./TaskForm";
 
-export function TaskHeader({
-	handleSearch,
-}: {
-	handleSearch: (args: any) => any;
-}) {
+export function TaskHeader({ handleSearch }: { handleSearch: (args) => void }) {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	return (
 		<>
