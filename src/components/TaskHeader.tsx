@@ -16,12 +16,7 @@ export function TaskHeader({ handleSearch }: { handleSearch: (args) => void }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Flex
-        w="100%"
-        px={8}
-        py={6}
-        justifyContent={["center", null, null, "start"]}
-      >
+      <Flex px={8} py={6} justifyContent={["center", null, null, "start"]}>
         <Button
           bgColor="orange.400"
           color="white"

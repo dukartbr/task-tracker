@@ -40,7 +40,7 @@ export function TaskColumnContainer({
   const sensors = useSensors(mouseSensor);
 
   return (
-    <Box width="100%" px={4} py={4}>
+    <Box width="100%" py={4}>
       <DndContext
         collisionDetection={rectIntersection}
         onDragStart={async (event) => {
@@ -84,13 +84,12 @@ export function TaskColumnContainer({
             `repeat(${taskColumns?.length}, 1fr)`,
           ]}
           gap={6}
-          overflow={isMobile ? "scroll" : "inherit"}
+          overflow="scroll"
           maxH={isMobile ? "calc(100vh - 150px)" : undefined}
           mt={isMobile ? 6 : undefined}
           pb={isMobile ? "150px" : undefined}
-          bgColor="gray.700"
-          // overflowY="scroll"
           maxWidth="100%"
+          justifyItems={isMobile ? "center" : "inherit"}
           css={{
             WebkitOverflowScrolling: "touch", // Enable smooth scrolling on iOS devices
             "&::-webkit-scrollbar": {

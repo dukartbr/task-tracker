@@ -19,7 +19,7 @@ function App() {
       bgColor="gray.700"
       h="100dvh"
       w="100vw"
-      position="relative"
+      position={isMobile ? "relative" : "fixed"}
       direction={["column", null, null, "row"]}
     >
       {isLoading ? (
