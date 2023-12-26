@@ -46,6 +46,8 @@ export function Sidebar({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { boards } = useBoards();
 
+  // !IMPORTANT - Temporary protection
+  const boardsEnabled = false;
   return (
     <>
       <Flex
@@ -58,54 +60,60 @@ export function Sidebar({
         <Box py={8}>
           <Icon as={FaReact} color="white" fontSize="3xl" />
         </Box>
-        <Box py={8} width="100%">
-          <Button
-            width="100%"
-            mb={5}
-            colorScheme="blue"
-            color="white"
-            rightIcon={<FaListCheck />}
-            onClick={() => setActiveBoard("")}
-          >
-            Task Tracker
-          </Button>
-          <Text
-            textAlign="center"
-            fontWeight="bold"
-            fontSize="lg"
-            textTransform="uppercase"
-            color="white"
-            width="100%"
-          >
-            Boards
-          </Text>
-          <Divider />
-          <Flex direction="column" my={5}>
-            {boards.map(({ title, id }) => (
+        {boardsEnabled ? (
+          <>
+            <Box py={8} width="100%">
               <Button
-                colorScheme="teal"
-                key={id}
-                my={2}
+                width="100%"
+                mb={5}
+                colorScheme="blue"
                 color="white"
-                rightIcon={<FaClipboardCheck />}
-                onClick={() => setActiveBoard(id)}
+                rightIcon={<FaListCheck />}
+                onClick={() => setActiveBoard("")}
               >
-                {`${title.slice(0, 10)}...`}
+                Task Tracker
               </Button>
-            ))}
-          </Flex>
-        </Box>
-        <Spacer />
-        <Button
-          colorScheme="purple"
-          rightIcon={<FaFileMedical />}
-          onClick={onOpen}
-          my={4}
-          width="100%"
-          textAlign="left"
-        >
-          Add Board
-        </Button>
+              <Text
+                textAlign="center"
+                fontWeight="bold"
+                fontSize="lg"
+                textTransform="uppercase"
+                color="white"
+                width="100%"
+              >
+                Boards
+              </Text>
+              <Divider />
+              <Flex direction="column" my={5}>
+                {boards.map(({ title, id }) => (
+                  <Button
+                    colorScheme="teal"
+                    key={id}
+                    my={2}
+                    color="white"
+                    rightIcon={<FaClipboardCheck />}
+                    onClick={() => setActiveBoard(id)}
+                  >
+                    {`${title.slice(0, 10)}...`}
+                  </Button>
+                ))}
+              </Flex>
+            </Box>
+            <Spacer />
+            <Button
+              colorScheme="purple"
+              rightIcon={<FaFileMedical />}
+              onClick={onOpen}
+              my={4}
+              width="100%"
+              textAlign="left"
+            >
+              Add Board
+            </Button>
+          </>
+        ) : (
+          <Spacer />
+        )}
         <Divider />
         <Box textAlign="right" py={3} width="100%">
           <Flex direction="column">
