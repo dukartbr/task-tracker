@@ -14,3 +14,9 @@ interface TaskColumn {
 	status: string;
 	tasks: Task[];
 }
+
+interface TaskBoard {
+	title: string;
+	id: string;
+	taskColumns: TaskColumn[]
+}
