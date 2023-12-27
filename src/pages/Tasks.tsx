@@ -1,10 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, RefObject } from "react";
 import { Flex } from "@chakra-ui/react";
 import { TaskColumnContainer } from "../components/TaskColumnContainer";
 import { TaskHeader } from "../components/TaskHeader";
 import { useTasks } from "../data";
 
-export function Tasks({ isMobile }: { isMobile: boolean }) {
+export function Tasks({
+  isMobile,
+  ref,
+}: {
+  isMobile: boolean;
+  ref: RefObject<HTMLDivElement>;
+}) {
   const { taskColumns: initialTaskColumns, updateTask } = useTasks();
   const [taskColumns, setTaskColumns] = useState<TaskColumn[]>([]);
 
@@ -29,7 +35,7 @@ export function Tasks({ isMobile }: { isMobile: boolean }) {
     }
   }
   return (
-    <Flex direction="column" width="100%" h="100dvh">
+    <Flex direction="column" overflowX="auto" h="100dvh" flexGrow={1} ref={ref}>
       {!isMobile && <TaskHeader handleSearch={handleSearch} />}
       <TaskColumnContainer
         isMobile={isMobile}

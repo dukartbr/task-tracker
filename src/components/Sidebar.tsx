@@ -55,7 +55,7 @@ export function Sidebar({
         direction="column"
         alignItems="center"
         px={6}
-        minW="200px"
+        w="200px"
       >
         <Box py={8}>
           <Icon as={FaReact} color="white" fontSize="3xl" />
