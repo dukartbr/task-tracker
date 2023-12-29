@@ -72,10 +72,9 @@ function StatusSelect(props) {
   );
 }
 
-function ColumnSelect(props) {
+function ColumnSelect({ boardId, ...props }) {
   const [columns, setColumns] = useState<TaskColumn[]>([]);
   const { getBoardById } = useBoards();
-  const { boardId } = props;
 
   useEffect(() => {
     (async () => {
@@ -116,6 +115,7 @@ export function TaskForm({
   );
   const hasTask = !!task;
   const { createTask, updateTask } = useTasks(onClose);
+  const { updateBoard } = useBoards();
   const isOverdue = !!dayjs().isAfter(dayjs(task?.dueDate).add(1, "day"));
   const daysLeft = task?.dueDate ? dayjs(dueDate).diff(new Date(), "d") : null;
 
@@ -157,6 +157,22 @@ export function TaskForm({
                 }
                 if (values.priority === "") {
                   values.priority = "0";
+                }
+                if (boardId) {
+                  updateBoard({
+                    boardId,
+                    newTask: {
+                      id: task?.id ?? uuidV4(),
+                      createdDate:
+                        task?.createdDate ?? new Date().toLocaleString(),
+                      dueDate: dueDate
+                        ? dueDate.toLocaleDateString()
+                        : undefined,
+                      editedDate: new Date().toLocaleString(),
+                      ...values,
+                    } as Task,
+                  });
+                  return;
                 }
                 if (task) {
                   updateTask({

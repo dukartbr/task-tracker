@@ -52,7 +52,7 @@ function App() {
               setActiveBoard={setActiveBoardId}
             />
           ) : (
-            <Tasks ref={mainRef} isMobile={isMobile} />
+            <Tasks mainRef={mainRef} isMobile={isMobile} />
           )}
         </>
       )}

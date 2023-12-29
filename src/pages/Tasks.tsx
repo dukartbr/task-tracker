@@ -1,15 +1,15 @@
 import { useEffect, useState, RefObject } from "react";
 import { Flex } from "@chakra-ui/react";
 import { TaskColumnContainer } from "../components/TaskColumnContainer";
-import { TaskHeader } from "../components/TaskHeader";
+import { BoardHeader } from "../components";
 import { useTasks } from "../data";
 
 export function Tasks({
   isMobile,
-  ref,
+  mainRef,
 }: {
   isMobile: boolean;
-  ref: RefObject<HTMLDivElement>;
+  mainRef: RefObject<HTMLDivElement>;
 }) {
   const { taskColumns: initialTaskColumns, updateTask } = useTasks();
   const [taskColumns, setTaskColumns] = useState<TaskColumn[]>([]);
@@ -19,6 +19,7 @@ export function Tasks({
   }, [setTaskColumns, initialTaskColumns]);
 
   function handleSearch(e) {
+    console.log("val", e.target.value);
     e.preventDefault();
     const searchValue = e.target.value;
     if (searchValue !== "") {
@@ -31,12 +32,25 @@ export function Tasks({
         }))
       );
     } else {
-      setTaskColumns(taskColumns);
+      setTaskColumns(initialTaskColumns);
     }
   }
   return (
-    <Flex direction="column" overflowX="auto" h="100dvh" flexGrow={1} ref={ref}>
-      {!isMobile && <TaskHeader handleSearch={handleSearch} />}
+    <Flex
+      direction="column"
+      overflowX="auto"
+      h="100dvh"
+      flexGrow={1}
+      ref={mainRef}
+    >
+      {/* {!isMobile && <TaskHeader handleSearch={handleSearch} />} */}
+      {!isMobile && (
+        <BoardHeader
+          title="React Task Tracker"
+          setActiveBoard={() => null}
+          handleSearch={handleSearch}
+        />
+      )}
       <TaskColumnContainer
         isMobile={isMobile}
         taskColumns={taskColumns}

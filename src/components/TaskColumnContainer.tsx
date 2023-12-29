@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Grid, GridItem } from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem } from "@chakra-ui/react";
 import {
   rectIntersection,
   DndContext,
@@ -40,7 +40,7 @@ export function TaskColumnContainer({
   const sensors = useSensors(mouseSensor);
 
   return (
-    <Box width="100%" py={4}>
+    <Box width="100%">
       <DndContext
         collisionDetection={rectIntersection}
         onDragStart={async (event) => {
@@ -76,16 +76,9 @@ export function TaskColumnContainer({
         }}
         sensors={sensors}
       >
-        <Grid
-          templateColumns={[
-            "1fr",
-            null,
-            null,
-            `repeat(${taskColumns?.length}, 1fr)`,
-          ]}
-          gap={6}
-          overflow="scroll"
-          maxH={isMobile ? "calc(100vh - 150px)" : undefined}
+        <Flex
+          overflowX="scroll"
+          // maxH={isMobile ? "calc(100vh - 150px)" : undefined}
           mt={isMobile ? 6 : undefined}
           pb={isMobile ? "150px" : undefined}
           maxWidth="100%"
@@ -103,11 +96,11 @@ export function TaskColumnContainer({
           {taskColumns
             ?.sort((a, b) => (a.status > b.status ? 1 : -1))
             .map((task) => (
-              <GridItem key={task.title}>
+              <Box mx={4} key={task.title}>
                 <TaskColumn isMobile={isMobile} taskColumn={task} />
-              </GridItem>
+              </Box>
             ))}
-        </Grid>
+        </Flex>
         <DragOverlay>{activeTask && <Task task={activeTask} />}</DragOverlay>
       </DndContext>
       {isMobile && <TaskFooter />}

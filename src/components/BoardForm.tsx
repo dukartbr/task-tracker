@@ -21,7 +21,7 @@ import { v4 as uuidV4 } from "uuid";
 import { FaPlus, FaRegCircleXmark, FaSquareMinus } from "react-icons/fa6";
 import { useBoards } from "../data";
 
-export function ProjectForm({
+export function BoardForm({
   isOpen,
   onClose,
 }: {

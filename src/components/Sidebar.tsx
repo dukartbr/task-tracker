@@ -17,7 +17,7 @@ import {
   FaClipboardCheck,
   FaListCheck,
 } from "react-icons/fa6";
-import { ProjectForm } from "./BoardForm";
+import { BoardForm } from "./BoardForm";
 import { useBoards } from "../data";
 
 const boards = [
@@ -138,7 +138,7 @@ export function Sidebar({
           </Flex>
         </Box>
       </Flex>
-      <ProjectForm isOpen={isOpen} onClose={onClose} />
+      <BoardForm isOpen={isOpen} onClose={onClose} />
     </>
   );
 }

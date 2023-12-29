@@ -53,7 +53,7 @@ async function getTaskById(id: string) {
   return foundTask;
 }
 
-async function createTask(newTask: Task, boardId?: string) {
+async function createTask(newTask: Task) {
   const taskColumns: TaskColumn[] = await fetchTaskColumns();
 
   const taskColumnToUpdate = taskColumns.find(
@@ -192,7 +192,46 @@ async function createBoard(newBoard: TaskBoard) {
   return newBoards;
 }
 
-async function updateBoard(boardToUpdate: TaskBoard) {}
+async function updateBoard({
+  boardId,
+  newTask,
+  boards,
+}: {
+  boardId: string;
+  newTask: Task;
+  boards: TaskBoard[];
+}) {
+  console.log("newTask", newTask);
+  const board = await getBoardById(boardId);
+  const boardColumns = board.taskColumns;
+  const columnToUpdate = boardColumns.find(
+    (col) => col.status === newTask.status
+  );
+  if (!columnToUpdate) {
+    console.log("we hit here :(");
+    return null;
+  }
+  const currentColumns = boardColumns.filter(
+    (col) => col.status !== newTask.status
+  );
+  const updatedColumn: TaskColumn = {
+    title: columnToUpdate.title,
+    status: columnToUpdate.status,
+    tasks: [...columnToUpdate.tasks, newTask],
+  };
+
+  const updatedColumns = [...currentColumns];
+  const updatedBoard: TaskBoard = {
+    ...board,
+    taskColumns: [...updatedColumns, updatedColumn],
+  };
+
+  const filteredBoards = boards.filter(({ id }) => id !== boardId);
+  const newBoards = [...filteredBoards, updatedBoard];
+  console.log("newBoards", newBoards);
+  localStorage.setItem("react-task-tracker-boards", JSON.stringify(newBoards));
+  return updatedBoard;
+}
 
 async function deleteBoard(boardId: string) {
   const boards: TaskBoard[] = await fetchBoards();
@@ -228,6 +267,11 @@ export function useBoards(callback?: () => void) {
     onSuccess: successHandler,
   });
 
+  const updateBoardMutation = useMutation({
+    mutationFn: updateBoard,
+    onSuccess: successHandler,
+  });
+
   return {
     boards: data as TaskBoard[],
     error,
@@ -235,5 +279,7 @@ export function useBoards(callback?: () => void) {
     getBoardById: (id: string) => getBoardById(id),
     deleteBoard: (id: string) => deleteBoardMutation.mutate(id),
     createBoard: (newBoard: TaskBoard) => createBoardMutation.mutate(newBoard),
+    updateBoard: ({ boardId, newTask }: { boardId: string; newTask: Task }) =>
+      updateBoardMutation.mutate({ boardId, newTask, boards: data }),
   };
 }
