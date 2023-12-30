@@ -194,30 +194,28 @@ async function createBoard(newBoard: TaskBoard) {
 
 async function updateBoard({
   boardId,
-  newTask,
+  task,
   boards,
 }: {
-  boardId: string;
-  newTask: Task;
+  boardId?: string;
+  task: Task;
   boards: TaskBoard[];
 }) {
-  console.log("newTask", newTask);
+  if (!boardId) return;
   const board = await getBoardById(boardId);
   const boardColumns = board.taskColumns;
-  const columnToUpdate = boardColumns.find(
-    (col) => col.status === newTask.status
-  );
+  const columnToUpdate = boardColumns.find((col) => col.status === task.status);
   if (!columnToUpdate) {
     console.log("we hit here :(");
     return null;
   }
   const currentColumns = boardColumns.filter(
-    (col) => col.status !== newTask.status
+    (col) => col.status !== task.status
   );
   const updatedColumn: TaskColumn = {
     title: columnToUpdate.title,
     status: columnToUpdate.status,
-    tasks: [...columnToUpdate.tasks, newTask],
+    tasks: [...columnToUpdate.tasks, task],
   };
 
   const updatedColumns = [...currentColumns];
@@ -245,7 +243,7 @@ async function deleteBoard(boardId: string) {
 export function useBoards(callback?: () => void) {
   const { data, error, isLoading, refetch } = useQuery({
     queryKey: ["react-task-tracker-boards"],
-    queryFn: fetchBoards,
+    queryFn: () => fetchBoards(),
     initialData: [],
   });
 
@@ -279,7 +277,7 @@ export function useBoards(callback?: () => void) {
     getBoardById: (id: string) => getBoardById(id),
     deleteBoard: (id: string) => deleteBoardMutation.mutate(id),
     createBoard: (newBoard: TaskBoard) => createBoardMutation.mutate(newBoard),
-    updateBoard: ({ boardId, newTask }: { boardId: string; newTask: Task }) =>
-      updateBoardMutation.mutate({ boardId, newTask, boards: data }),
+    updateBoard: ({ boardId, task }: { boardId?: string; task: Task }) =>
+      updateBoardMutation.mutate({ boardId, task, boards: data }),
   };
 }

@@ -19,12 +19,14 @@ export function TaskColumnContainer({
   setTaskColumns,
   title,
   updateTask,
+  boardId,
 }: {
   isMobile: boolean;
   taskColumns: TaskColumn[];
   setTaskColumns: (args: TaskColumn[]) => void;
-  updateTask: (task: Task) => void;
+  updateTask: (args) => void;
   title?: string;
+  boardId?: string;
 }) {
   const [prevStatus, setPrevStatus] = useState("");
   const [activeTask, setActiveTask] = useState<Task | null>(null);
@@ -54,7 +56,10 @@ export function TaskColumnContainer({
             ...currentTask,
             status: "",
           } as Task;
-          updateTask(updatedTask);
+          if (!boardId) {
+            updateTask(updatedTask);
+            return;
+          }
         }}
         onDragEnd={async ({ over }) => {
           if (activeTask && !over) {
@@ -78,10 +83,11 @@ export function TaskColumnContainer({
       >
         <Flex
           overflowX="scroll"
-          // maxH={isMobile ? "calc(100vh - 150px)" : undefined}
+          direction={isMobile ? "column" : "row"}
           mt={isMobile ? 6 : undefined}
           pb={isMobile ? "150px" : undefined}
-          maxWidth="100%"
+          // TODO: 200px needs to be reassigned as a ref value
+          w={["100%", null, null, "calc(100svw - 200px)"]}
           justifyItems={isMobile ? "center" : "inherit"}
           css={{
             WebkitOverflowScrolling: "touch", // Enable smooth scrolling on iOS devices
@@ -97,7 +103,11 @@ export function TaskColumnContainer({
             ?.sort((a, b) => (a.status > b.status ? 1 : -1))
             .map((task) => (
               <Box mx={4} key={task.title}>
-                <TaskColumn isMobile={isMobile} taskColumn={task} />
+                <TaskColumn
+                  isMobile={isMobile}
+                  taskColumn={task}
+                  boardId={boardId}
+                />
               </Box>
             ))}
         </Flex>

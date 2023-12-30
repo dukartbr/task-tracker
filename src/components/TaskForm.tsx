@@ -90,11 +90,13 @@ function ColumnSelect({ boardId, ...props }) {
 
   return (
     <Select placeholder="Select" backgroundColor="white" {...propsCopy}>
-      {columns.map(({ status, title }) => (
-        <option value={status} key={status}>
-          {title}
-        </option>
-      ))}
+      {columns
+        .sort((a, b) => (a.status > b.status ? 1 : -1))
+        .map(({ status, title }) => (
+          <option value={status} key={status}>
+            {title}
+          </option>
+        ))}
     </Select>
   );
 }
@@ -115,7 +117,7 @@ export function TaskForm({
   );
   const hasTask = !!task;
   const { createTask, updateTask } = useTasks(onClose);
-  const { updateBoard } = useBoards();
+  const { updateBoard } = useBoards(onClose);
   const isOverdue = !!dayjs().isAfter(dayjs(task?.dueDate).add(1, "day"));
   const daysLeft = task?.dueDate ? dayjs(dueDate).diff(new Date(), "d") : null;
 
@@ -151,6 +153,7 @@ export function TaskForm({
                 details: task?.details ?? "",
               }}
               validationSchema={TaskFormSchema}
+              // TODO: This needs is gross and needs to be abstracted
               onSubmit={(values: TaskValues) => {
                 if (values.status === "") {
                   values.status = "0";
@@ -161,7 +164,7 @@ export function TaskForm({
                 if (boardId) {
                   updateBoard({
                     boardId,
-                    newTask: {
+                    task: {
                       id: task?.id ?? uuidV4(),
                       createdDate:
                         task?.createdDate ?? new Date().toLocaleString(),

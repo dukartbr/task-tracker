@@ -13,9 +13,11 @@ import { Task } from "./Task";
 export function TaskColumn({
   taskColumn,
   isMobile,
+  boardId,
 }: {
   taskColumn: TaskColumn;
   isMobile: boolean;
+  boardId?: string;
 }) {
   const { isOpen, onToggle } = useDisclosure();
 
@@ -32,7 +34,8 @@ export function TaskColumn({
     <Flex
       direction="column"
       alignItems="center"
-      width="330px"
+      width={isMobile ? undefined : "330px"}
+      mx="auto"
       h="auto"
       overflow="hidden"
       px={isMobile ? 6 : undefined}
@@ -102,7 +105,7 @@ export function TaskColumn({
               {taskColumn?.tasks
                 ?.sort((a, b) => (a.priority > b.priority ? -1 : 1))
                 .map((task) => {
-                  return <Task key={task.id} task={task} />;
+                  return <Task key={task.id} task={task} boardId={boardId} />;
                 })}
             </Box>
           </Box>
