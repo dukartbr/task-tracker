@@ -35,14 +35,13 @@ export function Tasks({
     }
   }
   return (
-    <Box maxW="100%">
+    <Box w="100%" overflowX="scroll">
       <Flex
         direction={"column"}
         overflowX="auto"
         h="100svh"
         flexGrow={1}
         ref={mainRef}
-        width="100%"
       >
         {/* {!isMobile && <TaskHeader handleSearch={handleSearch} />} */}
         {!isMobile && (

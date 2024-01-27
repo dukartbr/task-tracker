@@ -86,8 +86,6 @@ export function TaskColumnContainer({
           direction={isMobile ? "column" : "row"}
           mt={isMobile ? 6 : undefined}
           pb={isMobile ? "150px" : undefined}
-          // TODO: 200px needs to be reassigned as a ref value
-          w={["100%", null, null, "calc(100svw - 200px)"]}
           justifyItems={isMobile ? "center" : "inherit"}
           css={{
             WebkitOverflowScrolling: "touch", // Enable smooth scrolling on iOS devices
